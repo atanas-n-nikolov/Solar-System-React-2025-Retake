@@ -1,0 +1,61 @@
+.hero {
+    position: relative;
+    background-color: #111;
+    color: white;
+    height: 900px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero .backgroundImage {
+    background-image: url('/images/hero-image.png');
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.5;
+}
+
+.container {
+    text-align: left;
+    max-width: 1400px;
+    width: 100%;
+    padding: 0 2em;
+    margin: 0 auto;
+}
+
+.content {
+    position: relative;
+}
+
+.hero h2 {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.hero p {
+    font-size: 1.2em;
+    margin-bottom: 1em;
+}
+
+.hero .actionBtn {
+    background-color: #1E90FF;
+    text-decoration: none;
+    color: white;
+    padding: 0.5em 2em;
+    border-radius: 0.3em;
+    border: none;
+    font-size: 1.2em; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.hero .actionBtn:hover {
+    background-color: #0056b3;
+}
