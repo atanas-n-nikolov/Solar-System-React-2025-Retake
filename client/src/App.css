@@ -1,31 +1,43 @@
 * {
-    padding: 0;
-    margin: 0;
-  }
-  
-  html, body {
-    height: 100%;
-  }
-  
-  #root {
-    background-color: #eee;
-  }
-  
-  html {
-    box-sizing: border-box;
-    font: 16px/1.5 "Roboto", sans-serif;
-  }
-  
-  *, *::before, *::after {
-    box-sizing: inherit;
-  }
-  
-  body {
-    background-color: #111;
-  }
+  padding: 0;
+  margin: 0;
+}
 
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
+html,
+body {
+  height: 100%;
+}
+
+#root {
+  background-color: #eee;
+}
+
+html {
+  box-sizing: border-box;
+  font: 16px/1.5 "Roboto", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #111;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.slick-dots {
+  position: relative;
+  margin-bottom: 1em;
+}
+
+.catalog-slider .slick-dots li.slick-active button:before {
+  color: #1E90FF;
+}

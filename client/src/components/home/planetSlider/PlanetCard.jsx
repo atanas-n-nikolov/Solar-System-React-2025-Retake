@@ -1,18 +1,21 @@
 import { Link } from 'react-router';
 
+import style from './PlanetSlider.module.css';
+
 export default function PlanetCard({ planet }) {
+
     return (
         <div className="p-2">
-            <div className="card-container">
+            <div className={style.cardContainer}>
                 <img
                     src={planet.image}
                     alt={planet.name}
-                    className="card-image"
+                    className={style.cardImage}
                 />
-                <div className="card-content">
-                    <h2 className="card-title">{planet.name}</h2>
-                    <p className="card-type">Type: {planet.type}</p>
-                    <Link to={`/planet/${planet._id}`} className="card-button">Learn More</Link>
+                <div className={style.cardContent}>
+                    <h2 className={style.cardTitle}>{planet.name}</h2>
+                    <p className={style.cardType}>Type: {planet.type}</p>
+                    <Link to={`/planet/${planet._id}`} className={style.cardButton}>Learn More</Link>
                 </div>
             </div>
         </div>

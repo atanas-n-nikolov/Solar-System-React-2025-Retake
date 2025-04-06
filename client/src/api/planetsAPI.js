@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import request from "../util/request";
+import request from './request.js';
 
 const baseUrl = 'http://localhost:3000/planets';
 
@@ -10,7 +10,7 @@ export const usePlanets = () => {
     useEffect(() => {
         const fetchPlanets = async () => {
             try {
-                const response = await request.get(`${baseUrl}`);
+                const response = await request.get(baseUrl);
                 setPlanets(response);
             } catch (error) {
                 setError('Failed to load planets. Please try again later.');

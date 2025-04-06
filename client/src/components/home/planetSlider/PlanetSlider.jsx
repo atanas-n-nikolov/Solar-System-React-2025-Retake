@@ -1,9 +1,10 @@
+import { usePlanets } from "../../../api/planetsAPI";
 import Slider from "react-slick";
 import PlanetCard from './PlanetCard';
-import ErrorNotification from '../../errorNotification/ErrorNotification';
 import { NextArrow, PrevArrow } from './Arrow';
-import { usePlanets } from "../../../api/planetsAPI";
-import './PlanetSlider.css';
+import ErrorNotification from "../../error/ErrorNotification";
+
+import style from './PlanetSlider.module.css';
 
 export default function PlanetSlider() {
     const { planets, error } = usePlanets();
@@ -12,14 +13,14 @@ export default function PlanetSlider() {
         dots: true,
         infinite: true,
         speed: 600,
-        slidesToShow: 4,
+        slidesToShow: 1,
         slidesToScroll: 1,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
     };
 
     return (
-        <div className="planets-container" style={{ padding: planets.length === 0 ? "0" : "" }}>
+        <div className={style.planetsContainer} style={{ padding: planets.length === 0 ? "0" : "" }}>
             {error && <ErrorNotification message={error} type="error" />}
             {planets.length > 0 ? (
                 <Slider className="catalog-slider" {...settings}>

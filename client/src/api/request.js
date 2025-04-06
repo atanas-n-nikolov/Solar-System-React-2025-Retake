@@ -1,4 +1,4 @@
-import { getAccessToken } from "./authUtil";
+import { getAccessToken } from "../util/authUtil";
 
 async function request(method, url, data = null) {
     const options = {

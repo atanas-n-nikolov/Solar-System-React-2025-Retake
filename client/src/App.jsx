@@ -1,6 +1,6 @@
-import './App.css'
-import Header from './components/common/header/Header'
-import HeroSection from './components/home/heroSection/HeroSection'
+import './App.css';
+import Header from './components/common/header/Header';
+import Home from './components/home/Home';
 
 export default function App() {
 
@@ -8,7 +8,7 @@ export default function App() {
         <div className="app-wrapper">
             <Header />
             <main className="main-content">
-                <HeroSection />
+                <Home />
             </main>
         </div>
     )
