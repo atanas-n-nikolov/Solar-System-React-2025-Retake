@@ -16,17 +16,15 @@ const userService = {
         return generateResponse(newUser);
     },
     async login(email, password) {
-
         const user = await User.findOne({ email });
-        if (!user) {
-            throw new Error('This email is not registered!');
+        const isValid = user ? await bcrypt.compare(password, user.password) : false;
+    
+        if (!user || !isValid) {
+            throw new Error('Invalid email or password!');
         }
-        const isValid = await bcrypt.compare(password, user.password);
-        if (!isValid) {
-            throw new Error('Invalid password!')
-        }
+    
         return generateResponse(user);
-    },
+    }
 };
 
 async function generateResponse(user) {

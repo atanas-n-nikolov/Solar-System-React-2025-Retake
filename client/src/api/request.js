@@ -25,7 +25,7 @@ async function request(method, url, data = null) {
             const { message, error } = await response.json();
             const errorMessage = error || message || "Request failed";
 
-            if (response.status !== 400 && response.status !== 404) {
+            if (response.status !== 401 && response.status !== 400 && response.status !== 404) {
                 console.error('Unexpected error:', errorMessage);
             }
 
@@ -35,7 +35,9 @@ async function request(method, url, data = null) {
         const result = await response.json();
         return result;
     } catch (error) {
-        console.error(error.message);
+        if (error.message && !error.message.includes('Invalid email or password!') && error.message !== 'Request failed') {
+            console.error(error.message || 'Request failed');
+        }
         throw new Error(error.message || 'Request failed');
     }
 };

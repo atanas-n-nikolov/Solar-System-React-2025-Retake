@@ -25,8 +25,7 @@ userController.post("/login", async (req, res) => {
         res.status(200).json(user);
 
     } catch (error) {
-        const errorMessage = catchError(error);
-        res.status(400).json({ message: errorMessage })
+        res.status(401).json({ message: error.message });
     }
 });
 

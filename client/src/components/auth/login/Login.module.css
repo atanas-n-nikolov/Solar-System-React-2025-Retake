@@ -1,0 +1,106 @@
+.container {
+  text-align: left;
+  max-width: 1400px;
+  width: 100%;
+  padding: 0 2em;
+  margin: 0 auto;
+}
+
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee;
+    gap: 5em;
+    height: 900px;
+  }
+  
+  .loginForm {
+    flex: 1;
+    max-width: 70ch;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 4em;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5em;
+  }
+  
+  .loginForm h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .loginForm label {
+    font-weight: 600;
+    color: #555;
+  }
+  
+  .loginForm input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+  
+  .loginForm input:focus {
+    outline: none;
+    border-color: #4a90e2;
+  }
+  
+  .loginForm button {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: #4a90e2;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+  }
+
+  .loginForm button:hover {
+    background-color: #357bd8;
+  }
+  
+  .loginImage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loginImage img {
+    max-width: 90%;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  .signupMessage {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+  }
+  
+  .signupMessage a {
+    color: #4a90e2;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .signupMessage a:hover {
+    text-decoration: underline;
+  }
+  
