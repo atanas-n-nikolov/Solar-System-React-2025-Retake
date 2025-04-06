@@ -1,7 +1,7 @@
 import { Schema, model, Types } from 'mongoose';
 
-const questionSchema = new Schema({
-  _ownerId: {
+const quizSchema = new Schema({
+  ownerId: {
     type: Types.ObjectId,
     ref: 'User',
     required: true,
@@ -35,26 +35,12 @@ const questionSchema = new Schema({
       },
       message: 'Правилният отговор трябва да е един от вариантите.',
     },
-  },
-  _createdOn: {
-    type: Number,
-    required: true,
-  },
-  _id: {
-    type: String,
-    required: true,
-  },
+  }
+},
+{
+  timestamps: true,
 });
 
-const quizSchema = new Schema({
-  level: {
-    type: String,
-    enum: ['Beginner', 'Intermediate', 'Advanced', 'Expert'],
-    required: true,
-  },
-  quiz: [questionSchema],
-});
-
-const Quiz = model('Quiz', quizSchema);
+const Quiz = model('Quiz', quizSchema, 'questions');
 
 export default Quiz;

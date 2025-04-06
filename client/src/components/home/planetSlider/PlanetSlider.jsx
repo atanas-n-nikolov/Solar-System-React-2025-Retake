@@ -7,7 +7,7 @@ import ErrorNotification from "../../error/ErrorNotification";
 import style from './PlanetSlider.module.css';
 
 export default function PlanetSlider() {
-    const { planets, error } = usePlanets();
+    const { planets, error, loading } = usePlanets();
 
     const settings = {
         dots: true,
@@ -17,6 +17,10 @@ export default function PlanetSlider() {
         slidesToScroll: 1,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
+    };
+
+    if (loading) {
+        return <h2 className={style.loading}>Loading...</h2>;
     };
 
     return (

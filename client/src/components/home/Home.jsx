@@ -5,6 +5,8 @@ import HeroSection from "./heroSection/HeroSection";
 import PlanetSlider from "./planetSlider/PlanetSlider";
 
 import style from './planetSlider/PlanetSlider.module.css';
+import FactOfTheDay from "./factOfTheDay/FactOfTheDay";
+import LastQuiz from "./lastQuiz/LastQuiz";
 
 export default function Home() {
     return(
@@ -16,6 +18,8 @@ export default function Home() {
                 </div>
                 <PlanetSlider />
                 <section className={style.something}>
+                    <FactOfTheDay />
+                    <LastQuiz />
                 </section>
             </section>
         </>

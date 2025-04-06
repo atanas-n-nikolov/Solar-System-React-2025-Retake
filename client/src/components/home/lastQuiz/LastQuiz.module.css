@@ -1,0 +1,104 @@
+.wrapperQ {
+    background-color: #fff;
+    padding: 5em 0;
+}
+
+.homeContainer {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 2em 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 4em;
+  }
+
+  .homeLeft {
+    flex: 1;
+  }
+  
+  .homeRight {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    min-height: 200px;
+    gap: 2em;
+    align-items: center;
+    padding: 1.5em;
+    border-radius: 1em;
+    box-shadow: 0 0.1em 0.8em rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .homeStartButton {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #1E90FF;
+    color: white;
+    padding: 1em 2em;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .homeStartButton:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+  
+  .lastQuizCard {
+    background-color: #eaf1f9;
+    padding: 1em 1.4em;
+    border-radius: 0.8em;
+    max-width: 350px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  
+  .lastQuizCard h3 {
+    color: #333;
+    font-size: 1.4em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+  }
+  
+  .lastQuizCard p {
+    color: #666;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 1em;
+  }
+  
+  .homeLeft h1 {
+    font-size: 2.5em;
+    color: #2c3e50;
+    margin-bottom: 1.5em;
+    font-weight: 700;
+  }
+  
+  .homeLeft p {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 2em;
+    line-height: 1.6;
+    font-style: italic;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .homeContainer {
+      flex-direction: column; 
+      gap: 1em;
+    }
+    
+    .homeLeft, .homeRight {
+      width: 100%;
+      max-width: 100%;
+    }
+    
+    .homeStartButton {
+      width: 100%;
+    }
+  }
+  

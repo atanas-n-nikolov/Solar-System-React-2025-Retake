@@ -1,6 +1,10 @@
 import { Schema, model, Types } from 'mongoose';
 
-const eventSchema = new Schema({
+const dayFactsSchema = new Schema({
+  date: {
+    type: String,
+    required: true,
+  },
   year: {
     type: Number,
     required: true,
@@ -13,18 +17,6 @@ const eventSchema = new Schema({
     type: String,
     required: true,
   },
-  source: {
-    type: String,
-    required: true,
-  },
-});
-
-const dayFactsSchema = new Schema({
-  date: {
-    type: String,
-    required: true,
-  },
-  events: [eventSchema],
   ownerId: {
     type: Types.ObjectId,
     ref: 'User',

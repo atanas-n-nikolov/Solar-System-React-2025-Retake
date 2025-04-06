@@ -6,7 +6,6 @@ import { isAuth, isAdmin } from '../middlewares/authMiddleware.js';
 const planetController = Router();
 
 planetController.get("/planets", async (req, res) => {
-    console.log("GET /planets hit"); 
     try {
         const planets = await Planet.find();
 
