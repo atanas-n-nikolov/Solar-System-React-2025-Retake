@@ -1,0 +1,131 @@
+.quizContainer {
+    max-width: 1400px;
+    min-height: 80vh;
+    margin: 0 auto;
+    padding: 2em 2em 6em;
+}
+
+.welcome {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2em;
+}
+
+.welcomeIntro {
+    max-width: 40ch;
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 1em;
+    text-align: center;
+    font-style: italic;
+}
+
+.quizTitle {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.quizGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5em;
+}
+
+.quizCard {
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0.8em;
+    padding: 1.5em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.quizCard:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.quizCardTitle {
+    font-size: 1.25em;
+    margin-bottom: 0.5em;
+}
+
+.quizCardDescription {
+    color: #555;
+    margin-bottom: 1em;
+}
+
+.quizCardCount {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.quizButton {
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1em;
+    padding: 0.6em 1.2em;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 0.4em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quizButton:hover {
+    background-color: #0056b3;
+}
+
+.quizFilter {
+    margin-bottom: 2em;
+    padding: 1em 2em;
+    border-radius: 0.6em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 1em;
+    background-color: #fff;
+}
+
+.clearFilterButton {
+    background-color: #fff;
+    color: black;
+    border: 1px solid #DDD;
+    padding: 0.5em 0.8em;
+    margin-left: 0.6em;
+    border-radius: 0.3em;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.clearFilterButton:hover {
+    background-color: #eee;
+}
+
+.quizFilter select {
+    padding: 0.5em;
+    font-size: 1em;
+    border-radius: 0.4em;
+    border: 1px solid #ccc;
+}
+
+.quizCardDifficulty {
+    font-size: 0.9em;
+    color: #6fc3df;
+    font-weight: bold;
+}
+
+.quizImage {
+    width: 20%;
+}
+
+.loading {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 0.5em 0;
+}

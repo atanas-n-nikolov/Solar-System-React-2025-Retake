@@ -1,0 +1,101 @@
+.planetsWrapper {
+    padding: 2em 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapperP {
+    max-width: 1400px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2em;
+    margin: 0 auto;
+}
+
+.welcome {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2em;
+}
+
+.welcomeIntro {
+    max-width: 40ch;
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 1em;
+    text-align: center;
+    font-style: italic;
+}
+
+.planetContainer {
+    background-color: #ffffff;
+    border-radius: 0.5em;
+    overflow: hidden;
+    box-shadow: 0 0.25em 0.6em rgba(0, 0, 0, 0.1);
+    width: 400px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1.3em;
+}
+
+.planetContainer:hover {
+    transform: translateY(-0.6em);
+    box-shadow: 0 0.5em 1.25em rgba(0, 0, 0, 0.15);
+}
+
+.planetImage {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 0.5em;
+}
+
+.planetContent {
+    padding-top: 1em;
+}
+
+.planetTitle {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 0.6em;
+}
+
+.planet-type {
+    margin: 0.4em 0;
+    color: #555;
+}
+
+.planetButton {
+    display: block;
+    padding: 0.6em 1.25em;
+    background-color: #1E90FF;
+    color: #fff;
+    border-radius: 0.3em;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.planetButton:hover {
+    background-color: #0056b3;
+}
+
+.planetsHeader {
+    text-align: center;
+}
+
+.welcomeImage {
+    width: 15%;
+}
+
+.loading {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 0.5em 0;
+}

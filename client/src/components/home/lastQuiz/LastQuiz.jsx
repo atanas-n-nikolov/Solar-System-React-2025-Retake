@@ -7,7 +7,7 @@ export default function LastQuiz() {
     const { latestQuiz, error, loading } = useLatestQuiz();
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <h2 className={style.loading}>Loading...</h2>;
     };
 
     if (error) {
