@@ -1,12 +1,12 @@
 import { useParams } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
-import { usePlanet } from '../../../api/planetsAPI';
+import { editCommentInPlanet, deleteCommentFromPlanet, addCommentToPlanet, usePlanet } from '../../../api/planetsAPI';
 import { useNotificationContext } from '../../../context/NotificationContext';
-import { addCommentToPlanet, deleteCommentFromPlanet, editCommentInPlanet } from '../../../api/planetsAPI';
 import { useState } from 'react';
 
 import style from './PlanetDetails.module.css';
-import { FaTrash, FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
+import { CommentForm } from '../../auth/user/comments/commentForm/CommentForm';
+import { Comment } from '../../auth/user/comments/comment/Comment';
 
 export default function PlanetDetails() {
     const { isAuthenticated, _id: userId } = useAuth();
@@ -14,9 +14,9 @@ export default function PlanetDetails() {
     const { planet, setPlanet, error, loading } = usePlanet(planetId);
     const { showNotification } = useNotificationContext();
     const [newComment, setNewComment] = useState('');
+    const [pending, setIsPending] = useState(false);
     const [editCommentId, setEditCommentId] = useState(null);
     const [editText, setEditText] = useState('');
-    const [pending, setIsPending] = useState(false);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -26,8 +26,7 @@ export default function PlanetDetails() {
         showNotification(error, 'error');
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (newComment) => {
         setIsPending(true);
         if (!newComment.trim()) {
             showNotification("Comment cannot be empty", 'error');
@@ -68,9 +67,7 @@ export default function PlanetDetails() {
         setEditText(currentText);
     };
 
-    const handleEditSubmit = async (e) => {
-        e.preventDefault();
-
+    const handleEditSubmit = async () => {
         if (!editText.trim()) {
             showNotification("Comment text cannot be empty", 'error');
             return;
@@ -85,6 +82,11 @@ export default function PlanetDetails() {
             showNotification('Failed to update comment.', 'error');
             console.error('Error editing comment:', err);
         }
+    };
+
+    const handleCancel = () => {
+        setEditCommentId(null);
+        setEditText('');
     };
 
     return (
@@ -111,70 +113,24 @@ export default function PlanetDetails() {
                     <h3>Comments</h3>
                     {planet.comments?.length > 0 ? (
                         planet.comments.map((comment) => (
-                            <div key={comment._id} className={style.comment}>
-                                <p>
-                                    <strong>
-                                        {comment.user ? `${comment.user.firstName} ${comment.user.lastName}` : 'Anonymous'}
-                                    </strong>: {comment.text}
-                                </p>
-
-                                {editCommentId === comment._id ? (
-                                    <form onSubmit={handleEditSubmit}>
-                                        <textarea
-                                            value={editText}
-                                            onChange={(e) => setEditText(e.target.value)}
-                                            placeholder="Edit your comment"
-                                            rows="4"
-                                        />
-                                        <div className={style.buttons}>
-                                            <button type="submit">
-                                                <FaCheck />
-                                            </button>
-                                            <button type="button" onClick={() => setEditCommentId(null)}>
-                                                <FaTimes />
-                                            </button>
-                                        </div>
-                                    </form>
-                                ) : (
-                                    <>
-                                        <div className={style.buttons}>
-                                            {comment.user && comment.user._id === userId && (
-                                                <>
-                                                    <button onClick={() => handleCommentDelete(comment._id)}>
-                                                        <FaTrash />
-                                                    </button>
-                                                    <button onClick={() => handleEditClick(comment._id, comment.text)}>
-                                                        <FaEdit />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </div>
-                                    </>
-                                )}
-                                <p className={style.date}>
-                                    {new Date(comment.createdAt).toISOString().slice(0, 19) === new Date(comment.updatedAt).toISOString().slice(0, 19)
-                                        ? <em>{new Date(comment.createdAt).toLocaleString()}</em>
-                                        : <><em>{`${new Date(comment.createdAt).toLocaleString()} (created)`}</em>
-                                            <em>{`${new Date(comment.updatedAt).toLocaleString()} (updated)`}</em>
-                                        </>
-                                    }
-                                </p>
-
-                            </div>
+                            <Comment
+                                key={comment._id}
+                                comment={comment}
+                                onDelete={handleCommentDelete}
+                                editCommentId={editCommentId}
+                                isUserComment={comment.user._id === userId}
+                                onEdit={handleEditClick}
+                                onCancel={handleCancel}
+                                onEditSubmit={handleEditSubmit}
+                                editText={editText}
+                                setEditText={setEditText}
+                            />
                         ))
                     ) : (
                         <p>No comments yet.</p>
                     )}
 
-                    <form onSubmit={handleSubmit} autoComplete="on">
-                        <textarea
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                            placeholder="Add a comment..."
-                            rows="4"
-                        />
-                        <button className={style.formBtn} type="submit" disabled={pending}>Submit</button>
-                    </form>
+                    <CommentForm onSubmit={handleSubmit} initialValue={newComment} disabled={pending} />
                 </div>
             )}
         </div>

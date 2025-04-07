@@ -8,6 +8,7 @@ export const useRegister = () => {
     const register = async (firstName, lastName, email, password, rePassword) => {
         try {
             const response = await request.post(`${baseUrl}/register`, { firstName, lastName, email, password, rePassword });
+            return response;
         } catch (error) {
             const errorMessage = error.message || "Register failed";
             throw new Error(errorMessage);

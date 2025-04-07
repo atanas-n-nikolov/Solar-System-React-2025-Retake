@@ -1,0 +1,44 @@
+.comment {
+    background-color: #fff;
+    padding: 1em 2em;
+    border-radius: 0.2em;
+    margin-bottom: 1em;
+    position: relative;
+}
+
+.comment p {
+    margin-bottom: 0.5em;
+}
+
+.comment .buttons {
+    display: flex;
+    gap: 1em;
+    position: absolute;
+    right: 2em;
+    top: 1em;
+}
+
+.comment .buttons button {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.comment .buttons button:hover {
+    color: #007bff;
+}
+
+.comment .date {
+    margin-top: 0.5em;
+    font-size: 0.9em;
+    color: #777;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comment form {
+    margin-top: 1em;
+}

@@ -28,7 +28,7 @@ commentsController.post('/planets/:planetId/comment', isAuth, async (req, res) =
         user.comments.push(planetId);
 
         await planet.save();
-        await user.save();
+        await User.findByIdAndUpdate(userId, { $set: { comments: user.comments } });
 
         const updatedPlanet = await Planet.findById(planetId)
             .populate('comments.user', 'firstName lastName')
@@ -68,7 +68,7 @@ commentsController.delete('/planets/:planetId/comment/:commentId', isAuth, async
         user.comments.pull(planetId); 
 
         await planet.save();
-        await user.save();
+        await User.findByIdAndUpdate(userId, { $set: { comments: user.comments } });
 
         const updatedPlanet = await Planet.findById(planetId)
             .populate('comments.user', 'firstName lastName')

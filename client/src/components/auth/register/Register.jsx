@@ -59,8 +59,8 @@ export default function Register() {
 
         try {
             setIsPending(true);
-            const authData = await register(firstName, lastName, email, password, rePassword);
-            userLoginHandler(authData);
+            const resultData = await register(firstName, lastName, email, password, rePassword);
+            userLoginHandler(resultData);
             navigate("/");
         } catch (err) {
             showNotification(err.message || 'Invalid registration. Please try again later.', "error");
