@@ -13,7 +13,15 @@ export const useRegister = () => {
 };
 
 export const useLogin = () => {
-    const login = async (email, password) => request.post(`${baseUrl}/login`, { email, password });
+    const login = async (email, password) => {
+        try {
+            const response = await request.post(`${baseUrl}/login`, { email, password });
+            return response;
+        } catch (error) {
+            const errorMessage = error.message || "Login failed";
+            throw new Error(errorMessage);
+        };
+    };
 
     return {
         login

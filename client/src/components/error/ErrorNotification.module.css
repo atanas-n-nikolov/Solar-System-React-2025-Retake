@@ -1,8 +1,17 @@
 .errorNotification {
-    padding: 0.6em;
+    padding: 1em;
     margin: 0.6em 0;
     border-radius: 0.3em;
     font-size: 0.9em;
+    max-width: 300px;
+    position: absolute;
+    top: 7em;
+    right: 2em;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .errorNotification.error {
@@ -13,4 +22,14 @@
 .errorNotification.success {
     background-color: #d4edda;
     color: #155724;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
 }

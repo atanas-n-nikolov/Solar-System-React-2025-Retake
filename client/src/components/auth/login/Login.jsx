@@ -4,39 +4,36 @@ import { UserContext } from "../../../context/UserContext";
 import { useLogin } from "../../../api/authAPI";
 
 import style from './Login.module.css';
-import ErrorNotification from "../../error/ErrorNotification";
+import { useNotificationContext } from "../../../context/NotificationContext";
 
 export default function Login() {
     const navigate = useNavigate();
     const { userLoginHandler } = useContext(UserContext);
     const { login } = useLogin();
+    const { showNotification } = useNotificationContext();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(null);
     const [isPending, setIsPending] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(null);
-        setSuccessMessage(null);
-
+    
         if (!email.trim() || !password.trim()) {
-            return setError("All fields are required.");
+            return showNotification("All fields are required.", "error");
         }
-
+    
         if (password.length < 6) {
-            return setError("Password must be at least 6 characters long.");
+            return showNotification("Password must be at least 6 characters long.", "error");
         }
-
+    
         try {
             setIsPending(true);
             const authData = await login(email, password);
             userLoginHandler(authData);
             navigate("/");
         } catch (err) {
-            setError(err.message || 'Invalid email or password.');
+            showNotification(err.message || 'Invalid email or password.', "error");
         } finally {
             setIsPending(false);
         }
@@ -46,8 +43,6 @@ export default function Login() {
         <div className={style.container}>
             <section className={style.loginContainer}>
                 <form className={style.loginForm} onSubmit={handleSubmit}>
-                    {error && <ErrorNotification message={error} />}
-                    {successMessage && <div className={style.successMessage}>{successMessage}</div>}
                     <h2>Login</h2>
                     <div className={style.formGroup}>
                         <label htmlFor="email">Email:</label>
@@ -57,7 +52,6 @@ export default function Login() {
                             name="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            required
                         />
                     </div>
                     <div className={style.formGroup}>
@@ -68,7 +62,6 @@ export default function Login() {
                             name="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            required
                         />
                     </div>
                     <button type="submit" disabled={isPending}>
