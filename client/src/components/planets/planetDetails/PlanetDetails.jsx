@@ -16,31 +16,35 @@ export default function PlanetDetails() {
     const [newComment, setNewComment] = useState('');
     const [editCommentId, setEditCommentId] = useState(null);
     const [editText, setEditText] = useState('');
+    const [pending, setIsPending] = useState(false);
 
     if (loading) {
         return <div>Loading...</div>;
-    };
+    }
 
     if (error) {
         showNotification(error, 'error');
-    };
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsPending(true);
         if (!newComment.trim()) {
             showNotification("Comment cannot be empty", 'error');
             return;
-        };
+        }
 
         try {
             const response = await addCommentToPlanet(planetId, newComment);
             if (response) {
                 setPlanet(response);
                 setNewComment('');
-            }
+            };
+            setIsPending(false)
         } catch (err) {
             showNotification('Failed to add comment.', 'error');
             console.error('Error adding comment:', err);
+            setIsPending(false)
         }
     };
 
@@ -75,7 +79,7 @@ export default function PlanetDetails() {
         try {
             const updatedPlanet = await editCommentInPlanet(planetId, editCommentId, editText);
             setPlanet(updatedPlanet);
-            setEditCommentId(null);  // Reset the edit state
+            setEditCommentId(null);
             setEditText('');
         } catch (err) {
             showNotification('Failed to update comment.', 'error');
@@ -113,20 +117,8 @@ export default function PlanetDetails() {
                                         {comment.user ? `${comment.user.firstName} ${comment.user.lastName}` : 'Anonymous'}
                                     </strong>: {comment.text}
                                 </p>
-                                <p><em>{new Date(comment.createdAt).toLocaleString()}</em></p>
-                                
-                                {comment.user && comment.user._id === userId && (
-                                    <>
-                                        <button onClick={() => handleCommentDelete(comment._id)}>
-                                            <FaTrash /> {/* Икона за изтриване */}
-                                        </button>
-                                        <button onClick={() => handleEditClick(comment._id, comment.text)}>
-                                            <FaEdit /> {/* Икона за редактиране */}
-                                        </button>
-                                    </>
-                                )}
 
-                                {editCommentId === comment._id && (
+                                {editCommentId === comment._id ? (
                                     <form onSubmit={handleEditSubmit}>
                                         <textarea
                                             value={editText}
@@ -134,14 +126,40 @@ export default function PlanetDetails() {
                                             placeholder="Edit your comment"
                                             rows="4"
                                         />
-                                        <button type="submit">
-                                            <FaCheck />
-                                        </button>
-                                        <button type="button" onClick={() => setEditCommentId(null)}>
-                                            <FaTimes />
-                                        </button>
+                                        <div className={style.buttons}>
+                                            <button type="submit">
+                                                <FaCheck />
+                                            </button>
+                                            <button type="button" onClick={() => setEditCommentId(null)}>
+                                                <FaTimes />
+                                            </button>
+                                        </div>
                                     </form>
+                                ) : (
+                                    <>
+                                        <div className={style.buttons}>
+                                            {comment.user && comment.user._id === userId && (
+                                                <>
+                                                    <button onClick={() => handleCommentDelete(comment._id)}>
+                                                        <FaTrash />
+                                                    </button>
+                                                    <button onClick={() => handleEditClick(comment._id, comment.text)}>
+                                                        <FaEdit />
+                                                    </button>
+                                                </>
+                                            )}
+                                        </div>
+                                    </>
                                 )}
+                                <p className={style.date}>
+                                    {new Date(comment.createdAt).toISOString().slice(0, 19) === new Date(comment.updatedAt).toISOString().slice(0, 19)
+                                        ? <em>{new Date(comment.createdAt).toLocaleString()}</em>
+                                        : <><em>{`${new Date(comment.createdAt).toLocaleString()} (created)`}</em>
+                                            <em>{`${new Date(comment.updatedAt).toLocaleString()} (updated)`}</em>
+                                        </>
+                                    }
+                                </p>
+
                             </div>
                         ))
                     ) : (
@@ -155,7 +173,7 @@ export default function PlanetDetails() {
                             placeholder="Add a comment..."
                             rows="4"
                         />
-                        <button type="submit">Submit</button>
+                        <button className={style.formBtn} type="submit" disabled={pending}>Submit</button>
                     </form>
                 </div>
             )}

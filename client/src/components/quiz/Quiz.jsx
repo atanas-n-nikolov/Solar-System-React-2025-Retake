@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { groupByCategory } from '../../util/groupByCategory';
 
 import style from './Quiz.module.css';
+import { useNotificationContext } from '../../context/NotificationContext';
 
 export default function Quiz() {
     const { quiz, error, loading } = useQuiz();

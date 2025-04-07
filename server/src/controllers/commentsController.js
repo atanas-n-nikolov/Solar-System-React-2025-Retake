@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Planet from '../models/Planet.js';
+import User from '../models/User.js';
 import catchError from '../util/catchError.js';
 import { isAuth } from '../middlewares/authMiddleware.js';
 
@@ -12,15 +13,22 @@ commentsController.post('/planets/:planetId/comment', isAuth, async (req, res) =
 
     try {
         const planet = await Planet.findById(planetId);
+        if (!planet) return res.status(404).json({ message: 'Planet not found' });
+
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
 
         const newComment = {
             user: userId,
             text,
+            createdAt: Date.now()
         };
 
         planet.comments.push(newComment);
+        user.comments.push(planetId);
 
         await planet.save();
+        await user.save();
 
         const updatedPlanet = await Planet.findById(planetId)
             .populate('comments.user', 'firstName lastName')
@@ -33,13 +41,17 @@ commentsController.post('/planets/:planetId/comment', isAuth, async (req, res) =
     }
 });
 
+
+
 commentsController.delete('/planets/:planetId/comment/:commentId', isAuth, async (req, res) => {
     const { planetId, commentId } = req.params;
     const userId = req.user._id;
 
     try {
         const planet = await Planet.findById(planetId);
-        if (!planet) {
+        const user = await User.findById(userId);
+
+        if (!planet || !user) {
             return res.status(404).json({ message: 'Planet not found' });
         }
 
@@ -52,9 +64,11 @@ commentsController.delete('/planets/:planetId/comment/:commentId', isAuth, async
             return res.status(403).json({ message: 'You can only delete your own comments' });
         }
 
-        planet.comments.id(commentId).remove();
+        planet.comments.pull(commentId);
+        user.comments.pull(planetId); 
 
         await planet.save();
+        await user.save();
 
         const updatedPlanet = await Planet.findById(planetId)
             .populate('comments.user', 'firstName lastName')
@@ -67,6 +81,7 @@ commentsController.delete('/planets/:planetId/comment/:commentId', isAuth, async
     }
 });
 
+
 commentsController.put('/planets/:planetId/comment/:commentId', isAuth, async (req, res) => {
     const { planetId, commentId } = req.params;
     const userId = req.user._id;
@@ -78,7 +93,9 @@ commentsController.put('/planets/:planetId/comment/:commentId', isAuth, async (r
 
     try {
         const planet = await Planet.findById(planetId);
-        if (!planet) {
+        const user = await User.findById(userId);
+
+        if (!planet || !user) {
             return res.status(404).json({ message: 'Planet not found' });
         }
 
@@ -92,6 +109,7 @@ commentsController.put('/planets/:planetId/comment/:commentId', isAuth, async (r
         }
 
         comment.text = text;
+        comment.updatedAt = Date.now();
         await planet.save();
 
         const updatedPlanet = await Planet.findById(planetId)

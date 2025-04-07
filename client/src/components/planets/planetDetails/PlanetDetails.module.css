@@ -43,3 +43,75 @@
 h3 {
     margin-top: 1.5em;
 }
+
+.planetComments {
+    margin-top: 2em;
+}
+
+.comment {
+    background-color: #fff;
+    padding: 1em 2em;
+    border-radius: 0.2em;
+    margin-bottom: 1em;
+    position: relative;
+}
+
+.comment p {
+    margin-bottom: 0.5em;
+}
+
+.comment .buttons {
+    display: flex;
+    gap: 1em;
+    position: absolute;
+    right: 2em;
+    top: 1em;
+}
+
+.comment .buttons button {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.comment .buttons button:hover {
+    color: #007bff;
+}
+
+.comment .date {
+    margin-top: 0.5em;
+    font-size: 0.9em;
+    color: #777;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comment form {
+    margin-top: 1em;
+}
+
+form textarea {
+    width: 100%;
+    padding: 1em;
+    font-size: 1em;
+    border-radius: 0.2em;
+    border: 1px solid #ccc;
+}
+
+.formBtn {
+    background-color: #1E90FF;
+    color: white;
+    padding: 0.5em 2em;
+    border-radius: 0.3em;
+    border: none;
+    font-size: 1.2em; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.formBtn:hover {
+    background-color: #0056b3;
+}
