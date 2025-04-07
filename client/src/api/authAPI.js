@@ -5,7 +5,14 @@ import { UserContext } from "../context/UserContext";
 const baseUrl = 'http://localhost:3000';
 
 export const useRegister = () => {
-    const register = (firstName, lastName, email, password, rePassword) => request.post(`${baseUrl}/register`, { firstName, lastName, email, password, rePassword });
+    const register = async (firstName, lastName, email, password, rePassword) => {
+        try {
+            const response = await request.post(`${baseUrl}/register`, { firstName, lastName, email, password, rePassword });
+        } catch (error) {
+            const errorMessage = error.message || "Register failed";
+            throw new Error(errorMessage);
+        };
+    };
 
     return {
         register,
@@ -31,7 +38,6 @@ export const useLogin = () => {
 export const useLogout = () => {
     const { accessToken, userLogoutHandler } = useContext(UserContext);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (!accessToken) {
@@ -49,9 +55,9 @@ export const useLogout = () => {
 
             try {
                 await userLogoutHandler();
-            } catch (err) {
-                setError("Logout failed. Please try again later.");
-                console.error("Logout failed", err);
+            } catch (error) {
+                const errorMessage = error.message || "Logout failed, please try again later.";
+                throw new Error(errorMessage);
             } finally {
                 setIsLoggingOut(false);
             }
@@ -62,6 +68,5 @@ export const useLogout = () => {
 
     return {
         isLoggingOut,
-        error,
     };
 };

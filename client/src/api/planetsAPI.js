@@ -38,7 +38,6 @@ export const usePlanet = (planetId) => {
                 setPlanet(response);
             } catch (error) {
                 setError('Failed to load planet details.');
-                console.error('Error fetching planet details:', error);
             } finally {
                 setLoading(false);
             };
@@ -65,7 +64,7 @@ export const addCommentToPlanet = async (planetId, commentText) => {
 
 export const deleteCommentFromPlanet = async (planetId, commentId) => {
     try {
-        const response = await request.delete(`${baseUrl}/${planetId}/comments/${commentId}`);
+        const response = await request.delete(`${baseUrl}/${planetId}/comment/${commentId}`);
 
         const data = await response;
 
@@ -77,5 +76,5 @@ export const deleteCommentFromPlanet = async (planetId, commentId) => {
     } catch (err) {
         console.error('Error deleting comment:', err);
         throw err;
-    }
+    };
 };

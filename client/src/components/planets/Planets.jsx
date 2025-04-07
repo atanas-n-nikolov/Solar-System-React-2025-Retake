@@ -1,20 +1,23 @@
 import { Link } from 'react-router';
-import ErrorNotification from '../error/ErrorNotification';
 import style from './Planets.module.css';
 import { usePlanets } from '../../api/planetsAPI';
+import { useNotificationContext } from '../../context/NotificationContext';
 
 export default function Planets() {
     const { planets, error, loading } = usePlanets();
+    const { showNotification } = useNotificationContext();
 
     if (loading) {
         return <h2 className={style.loading}>Loading...</h2>;
     };
 
+    if (error) {
+        showNotification(error, 'error');
+    };
+
     return (
         <div className={style.planetsWrapper}>
             <h1 className={style.planetsHeader}>Solar System Planets</h1>
-
-            {error && <ErrorNotification message={error} type="error" />}
 
             <div className={style.welcome}>
                 <img className={style.welcomeImage} src="images/planets-image.png" alt="planets-image" />

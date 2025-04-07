@@ -1,9 +1,9 @@
 export const getAccessToken = () => {
     const user = localStorage.getItem('auth');
-
+    
     if (!user) {
         return '';
-    }
+    };
 
     try {
         const userData = JSON.parse(user);

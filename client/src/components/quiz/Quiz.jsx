@@ -6,14 +6,15 @@ import style from './Quiz.module.css';
 
 export default function Quiz() {
     const { quiz, error, loading } = useQuiz();
+    const { showNotification } = useNotificationContext();
 
     if (loading) {
         return <h2 className={style.loading}>Loading...</h2>;
-    }
+    };
 
     if (error) {
-        return <div className={style.errorMessage}>Error: {error}</div>;
-    }
+        showNotification(error, 'error');  
+    };
 
     const categories = groupByCategory(quiz);
 

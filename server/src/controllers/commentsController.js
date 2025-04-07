@@ -5,7 +5,7 @@ import { isAuth } from '../middlewares/authMiddleware.js';
 
 const commentsController = Router();
 
-commentsController.post('/planets/:planetId/comments', isAuth, async (req, res) => {
+commentsController.post('/planets/:planetId/comment', isAuth, async (req, res) => {
     const { planetId } = req.params;
     const { text } = req.body;
     const userId = req.user._id;
@@ -33,7 +33,7 @@ commentsController.post('/planets/:planetId/comments', isAuth, async (req, res) 
     }
 });
 
-commentsController.delete('/planets/:planetId/comments/:commentId', isAuth, async (req, res) => {
+commentsController.delete('/planets/:planetId/comment/:commentId', isAuth, async (req, res) => {
     const { planetId, commentId } = req.params;
     const userId = req.user._id;
 
@@ -57,3 +57,5 @@ commentsController.delete('/planets/:planetId/comments/:commentId', isAuth, asyn
         res.status(500).json({ message: errorMessage });
     }
 });
+
+export default commentsController;

@@ -1,4 +1,4 @@
-import { getAccessToken } from "../util/authUtil";
+import { getAccessToken} from '../util/authUtil.js';
 
 async function request(method, url, data = null) {
     const options = {
@@ -8,7 +8,7 @@ async function request(method, url, data = null) {
         }
     };
 
-    const { accessToken } = getAccessToken();
+    const accessToken = getAccessToken();
 
     if (accessToken) {
         options.headers['Authorization'] = `Bearer ${accessToken}`;

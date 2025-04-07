@@ -42,7 +42,7 @@ export default function Login() {
     return (
         <div className={style.container}>
             <section className={style.loginContainer}>
-                <form className={style.loginForm} onSubmit={handleSubmit}>
+                <form className={style.loginForm} onSubmit={handleSubmit} autoComplete="on">
                     <h2>Login</h2>
                     <div className={style.formGroup}>
                         <label htmlFor="email">Email:</label>
@@ -51,6 +51,7 @@ export default function Login() {
                             id="email"
                             name="email"
                             value={email}
+                            autoComplete="email"
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
@@ -61,6 +62,7 @@ export default function Login() {
                             id="password"
                             name="password"
                             value={password}
+                            autoComplete="current-password"
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>

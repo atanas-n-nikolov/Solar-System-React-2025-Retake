@@ -1,16 +1,18 @@
 import { useFact } from '../../../api/factsAPI';
-import ErrorNotification from '../../error/ErrorNotification';
+import { useNotificationContext } from '../../../context/NotificationContext';
 import style from './FactOfTheDay.module.css';
 
 export default function FactOfTheDay() {
     const { fact, error, loading } = useFact();
+    const { showNotification } = useNotificationContext();
+
 
     if (loading) {
         return <div>Loading...</div>;
     };
 
     if (error) {
-        return <ErrorNotification message={error} type="error" />;
+        showNotification(error, 'error');
     };
 
     if (!fact) {

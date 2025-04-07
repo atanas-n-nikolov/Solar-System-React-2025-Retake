@@ -16,6 +16,7 @@ import ErrorNotification from './components/error/ErrorNotification';
 import Logout from './components/auth/logout/Logout';
 
 import './App.css';
+import PlanetDetails from './components/planets/planetDetails/PlanetDetails';
 
 
 export default function App() {
@@ -30,6 +31,7 @@ export default function App() {
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/planets" element={<Planets />} />
+                            <Route path="/planet/:planetId" element={<PlanetDetails />} />
                             <Route element={<GuestGuard />}>
                                 <Route path="/sign-up" element={<Register />} />
                                 <Route path="/login" element={<Login />} />

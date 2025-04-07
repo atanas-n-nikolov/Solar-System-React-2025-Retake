@@ -69,37 +69,36 @@ export default function Register() {
         }
     };
 
-
     return (
         <div className={style.container}>
             <section className={style.registerContainer}>
-                <form className={style.registerForm} onSubmit={handleSubmit}>
+                <form className={style.registerForm} onSubmit={handleSubmit} autoComplete="on">
                     <h2>Registration</h2>
 
                     <div className={style.formFullName}>
                         <div className={style.formGroup}>
                             <label htmlFor="firstName">First name:</label>
-                            <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} />
+                            <input type="text" id="firstName" name="firstName" value={formData.firstName} autoComplete="given-name" onChange={handleChange} />
                         </div>
                         <div className={style.formGroup}>
                             <label htmlFor="lastName">Last name:</label>
-                            <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} />
+                            <input type="text" id="lastName" name="lastName" value={formData.lastName} autoComplete="family-name" onChange={handleChange} />
                         </div>
                     </div>
 
                     <div className={style.formGroup}>
                         <label htmlFor="email">Email:</label>
-                        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
+                        <input type="email" id="email" name="email" value={formData.email} autoComplete="email" onChange={handleChange} />
                     </div>
 
                     <div className={style.formGroup}>
                         <label htmlFor="password">Password:</label>
-                        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
+                        <input type="password" id="password" name="password" value={formData.password} autoComplete="new-password" onChange={handleChange} />
                     </div>
 
                     <div className={style.formGroup}>
                         <label htmlFor="rePassword">Repeat password:</label>
-                        <input type="password" id="rePassword" name="rePassword" value={formData.rePassword} onChange={handleChange} />
+                        <input type="password" id="rePassword" name="rePassword" value={formData.rePassword} autoComplete="new-password" onChange={handleChange} />
                     </div>
 
                     <button type="submit" disabled={isPending}>

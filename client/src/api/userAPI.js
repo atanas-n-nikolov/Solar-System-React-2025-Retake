@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import request from "../util/request";
-import { useParams } from "react-router";
 
 const baseUrl = 'http://localhost:3001/profile';
 

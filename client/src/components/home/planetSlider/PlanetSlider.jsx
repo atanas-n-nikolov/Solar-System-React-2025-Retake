@@ -2,12 +2,13 @@ import { usePlanets } from "../../../api/planetsAPI";
 import Slider from "react-slick";
 import PlanetCard from './PlanetCard';
 import { NextArrow, PrevArrow } from './Arrow';
-import ErrorNotification from "../../error/ErrorNotification";
+import { useNotificationContext } from "../../../context/NotificationContext";
 
 import style from './PlanetSlider.module.css';
 
 export default function PlanetSlider() {
     const { planets, error, loading } = usePlanets();
+    const { showNotification } = useNotificationContext();
 
     const settings = {
         dots: true,
@@ -23,9 +24,12 @@ export default function PlanetSlider() {
         return <h2 className={style.loading}>Loading...</h2>;
     };
 
+    if (error) {
+        showNotification(error, 'error');
+    };
+
     return (
         <div className={style.planetsContainer} style={{ padding: planets.length === 0 ? "0" : "" }}>
-            {error && <ErrorNotification message={error} type="error" />}
             {planets.length > 0 ? (
                 <Slider className="catalog-slider" {...settings}>
                     {planets.map((planet) => (

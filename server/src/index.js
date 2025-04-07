@@ -3,6 +3,7 @@ import routes from './routes.js';
 import cors from 'cors'
 import 'dotenv/config'
 import mongoose from 'mongoose';
+import { authMiddleware } from './middlewares/authMiddleware.js';
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(authMiddleware);
 app.use(routes);
 
 const PORT = process.env.PORT || 3000;

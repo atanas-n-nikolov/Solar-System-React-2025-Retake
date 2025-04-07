@@ -1,17 +1,18 @@
 import { Link } from 'react-router';
 import style from './LastQuiz.module.css';
-import ErrorNotification from '../../error/ErrorNotification';
 import { useLatestQuiz } from '../../../api/quizAPI';
+import { useNotificationContext } from '../../../context/NotificationContext';
 
 export default function LastQuiz() {
     const { latestQuiz, error, loading } = useLatestQuiz();
+    const { showNotification } = useNotificationContext();
 
     if (loading) {
         return <h2 className={style.loading}>Loading...</h2>;
     };
 
     if (error) {
-        return <ErrorNotification message={error} type="error" />;
+        showNotification(error, 'error');
     };
 
     return (
@@ -27,10 +28,6 @@ export default function LastQuiz() {
 
                 <div className={style.homeRight}>
                     <h2>Last Added Quiz</h2>
-
-
-                    {error && <ErrorNotification message={error} type="error" />}
-
 
                     {latestQuiz ? (
                         <>
