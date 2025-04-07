@@ -2,10 +2,11 @@ import { useParams } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 import { usePlanet } from '../../../api/planetsAPI';
 import { useNotificationContext } from '../../../context/NotificationContext';
-import { addCommentToPlanet, deleteCommentFromPlanet } from '../../../api/planetsAPI';
+import { addCommentToPlanet, deleteCommentFromPlanet, editCommentInPlanet } from '../../../api/planetsAPI';
+import { useState } from 'react';
 
 import style from './PlanetDetails.module.css';
-import { useState } from 'react';
+import { FaTrash, FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
 
 export default function PlanetDetails() {
     const { isAuthenticated, _id: userId } = useAuth();
@@ -13,6 +14,8 @@ export default function PlanetDetails() {
     const { planet, setPlanet, error, loading } = usePlanet(planetId);
     const { showNotification } = useNotificationContext();
     const [newComment, setNewComment] = useState('');
+    const [editCommentId, setEditCommentId] = useState(null);
+    const [editText, setEditText] = useState('');
 
     if (loading) {
         return <div>Loading...</div>;
@@ -36,17 +39,14 @@ export default function PlanetDetails() {
                 setNewComment('');
             }
         } catch (err) {
-            setCommentError('Failed to add comment.');
+            showNotification('Failed to add comment.', 'error');
             console.error('Error adding comment:', err);
         }
-
-        setNewComment('');
     };
 
     const handleCommentDelete = async (commentId) => {
         try {
             const success = await deleteCommentFromPlanet(planetId, commentId);
-            
             if (success) {
                 setPlanet(prevPlanet => {
                     const updatedComments = prevPlanet.comments.filter(comment => comment._id !== commentId);
@@ -54,8 +54,32 @@ export default function PlanetDetails() {
                 });
             }
         } catch (err) {
+            showNotification('Failed to delete comment.', 'error');
             console.error('Error deleting comment:', err);
-            setCommentError('Failed to delete comment.');
+        }
+    };
+
+    const handleEditClick = (commentId, currentText) => {
+        setEditCommentId(commentId);
+        setEditText(currentText);
+    };
+
+    const handleEditSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!editText.trim()) {
+            showNotification("Comment text cannot be empty", 'error');
+            return;
+        }
+
+        try {
+            const updatedPlanet = await editCommentInPlanet(planetId, editCommentId, editText);
+            setPlanet(updatedPlanet);
+            setEditCommentId(null);  // Reset the edit state
+            setEditText('');
+        } catch (err) {
+            showNotification('Failed to update comment.', 'error');
+            console.error('Error editing comment:', err);
         }
     };
 
@@ -90,8 +114,33 @@ export default function PlanetDetails() {
                                     </strong>: {comment.text}
                                 </p>
                                 <p><em>{new Date(comment.createdAt).toLocaleString()}</em></p>
+                                
                                 {comment.user && comment.user._id === userId && (
-                                    <button onClick={() => handleCommentDelete(comment._id)}>Delete</button>
+                                    <>
+                                        <button onClick={() => handleCommentDelete(comment._id)}>
+                                            <FaTrash /> {/* Икона за изтриване */}
+                                        </button>
+                                        <button onClick={() => handleEditClick(comment._id, comment.text)}>
+                                            <FaEdit /> {/* Икона за редактиране */}
+                                        </button>
+                                    </>
+                                )}
+
+                                {editCommentId === comment._id && (
+                                    <form onSubmit={handleEditSubmit}>
+                                        <textarea
+                                            value={editText}
+                                            onChange={(e) => setEditText(e.target.value)}
+                                            placeholder="Edit your comment"
+                                            rows="4"
+                                        />
+                                        <button type="submit">
+                                            <FaCheck />
+                                        </button>
+                                        <button type="button" onClick={() => setEditCommentId(null)}>
+                                            <FaTimes />
+                                        </button>
+                                    </form>
                                 )}
                             </div>
                         ))

@@ -78,3 +78,22 @@ export const deleteCommentFromPlanet = async (planetId, commentId) => {
         throw err;
     };
 };
+
+export const editCommentInPlanet = async (planetId, commentId, newCommentText) => {
+    try {
+        const response = await request.put(`${baseUrl}/${planetId}/comment/${commentId}`, {
+            text: newCommentText,
+        });
+
+        const data = await response;
+
+        if (data.message === 'Comment updated successfully') {
+            return data.planet;
+        } else {
+            throw new Error('Failed to update comment');
+        }
+    } catch (err) {
+        console.error('Error updating comment:', err);
+        throw err;
+    }
+};
