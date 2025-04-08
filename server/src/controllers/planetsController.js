@@ -55,6 +55,8 @@ planetController.get("/planets/:planetId", async (req, res) => {
       const planetId = req.params.planetId;
   
       const planet = await Planet.findById(planetId).populate('comments.user', 'firstName lastName');
+      console.log(planet);
+      
       res.json(planet);
     } catch (err) {
       const error = catchError(err)

@@ -12,7 +12,7 @@ export function Comment({ planetId, comment, updatePlanetComments }) {
     const [pending, setPending] = useState(false);
     const [editedText, setEditedText] = useState(comment.text);
 
-    const isOwner = userId === comment.user._id;
+    const isOwner = comment.user && comment.user._id === userId;
 
     const handleDelete = async () => {
         try {
@@ -64,8 +64,10 @@ export function Comment({ planetId, comment, updatePlanetComments }) {
     return (
         <div className={style.comment}>
             <p>
-                <strong>{comment.user.firstName} {comment.user.lastName}</strong>:
-            {isEditing ? (
+                <strong>
+                    {comment.user ? `${comment.user.firstName} ${comment.user.lastName}` : 'Deleted user'}
+                :</strong>
+                {isEditing ? (
                     <textarea
                         value={editedText}
                         onChange={(e) => setEditedText(e.target.value)}

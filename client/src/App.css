@@ -41,3 +41,8 @@ img {
 .catalog-slider .slick-dots li.slick-active button:before {
   color: #1E90FF;
 }
+
+.main-content {
+  flex: 1;
+  min-height: 80vh;
+}

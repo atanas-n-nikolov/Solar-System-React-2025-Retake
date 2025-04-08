@@ -67,3 +67,7 @@
 .comment .editTextArea::placeholder {
     color: #aaa;
 }
+
+.comment strong {
+    padding-right: 0.5em;
+}

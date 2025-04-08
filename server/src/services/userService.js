@@ -24,6 +24,45 @@ const userService = {
         }
     
         return generateResponse(user);
+    },
+    async updateUser(userId, updateData) {
+        try {
+            console.log('Attempting to update user:', { userId, updateData });
+    
+            const user = await User.findById(userId);
+    
+            if (!user) {
+                console.log('User not found with id:', userId);
+                throw new Error('User not found');
+            }
+    
+            const updatedFields = {};
+    
+            if (updateData.firstName) {
+                updatedFields.firstName = updateData.firstName;
+            }
+    
+            if (updateData.lastName) {
+                updatedFields.lastName = updateData.lastName;
+            }
+    
+            if (updateData.score) {
+                updatedFields.score = user.score + (updateData.score || 0);
+            }
+    
+            if (updateData.answers) {
+                user.answers.push(...updateData.answers);
+                updatedFields.answers = user.answers;
+            }
+    
+            const updatedUser = await User.findByIdAndUpdate(userId, updatedFields, { new: true });
+    
+            console.log('User successfully updated:', updatedUser);
+            return updatedUser;
+        } catch (err) {
+            console.error('Failed to update user data:', err);
+            throw new Error('Failed to update user data');
+        }
     }
 };
 

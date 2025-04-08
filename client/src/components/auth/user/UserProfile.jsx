@@ -1,25 +1,72 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import useUserProfile from "../../../hooks/useUserProfile";
 import { UserContext } from "../../../context/UserContext";
 import styles from "./UserProfile.module.css";
+import { deleteUser, updateUserData } from "../../../api/userAPI";
+import { useNotificationContext } from "../../../context/NotificationContext";
 
 export default function UserProfile() {
     const { userId } = useParams();
     const navigate = useNavigate();
     const { userLogoutHandler } = useContext(UserContext);
+    const { showNotification } = useNotificationContext();
 
     const { userData, comments, answers, loading, error } = useUserProfile(userId);
 
+    const [isEditing, setIsEditing] = useState(false);
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+    });
+
+    useEffect(() => {
+        if (userData) {
+            setFormData({
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                email: userData.email
+            });
+        }
+    }, [userData]);
+
     const handleDeleteUser = async () => {
+        const confirmed = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+    
+        if (!confirmed) return;
+    
         try {
             const success = await deleteUser(userId, userLogoutHandler);
-            if (success) {
-                navigate('/');
+            if (success) navigate('/');
+        } catch (err) {
+            showNotification("Error deleting user.", 'error');
+        }
+    };
+
+    const handleEditClick = () => setIsEditing(true);
+
+    const handleCancelEdit = () => {
+        setFormData({
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            email: userData.email
+        });
+        setIsEditing(false);
+    };
+
+    const handleChange = (e) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    const handleSave = async () => {
+        try {
+            const updated = await updateUserData(userId, formData);
+            if (updated) {
+                showNotification("Profile updated successfully!", 'success');
+                setIsEditing(false);
             }
         } catch (err) {
-            setError("Error deleting user.");
-            console.error("Error deleting user:", err);
+            showNotification("Error updating profile.", 'error');
         }
     };
 
@@ -29,16 +76,53 @@ export default function UserProfile() {
     return (
         <div className={styles.userProfile}>
             <div className={styles.profileData}>
-                <h1>{userData?.firstName} {userData?.lastName}</h1>
-                <p>Email: {userData?.email}</p>
-                <p>Score: {userData?.score}</p>
+                {isEditing ? (
+                    <>
+                        <div className={styles.formGroup}>
+                            <label htmlFor="firstName" className={styles.label}>First Name</label>
+                            <input
+                                type="text"
+                                id="firstName"
+                                name="firstName"
+                                value={formData.firstName}
+                                onChange={handleChange}
+                                className={styles.input}
+                            />
+                        </div>
+
+                        <div className={styles.formGroup}>
+                            <label htmlFor="lastName" className={styles.label}>Last Name</label>
+                            <input
+                                type="text"
+                                id="lastName"
+                                name="lastName"
+                                value={formData.lastName}
+                                onChange={handleChange}
+                                className={styles.input}
+                            />
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <h1>{userData?.firstName} {userData?.lastName}</h1>
+                        <p>Email: {userData?.email}</p>
+                        <p>Score: {userData?.score}</p>
+                    </>
+                )}
             </div>
 
             <div className={styles.buttonsContainer}>
-                <Link to={`/profile/${userId}/edit`} className={styles.editProfileLink}>Edit Profile</Link>
-                <button onClick={handleDeleteUser} className={styles.deleteUserButton}>
-                    Delete Account
-                </button>
+                {isEditing ? (
+                    <>
+                        <button onClick={handleSave} className={styles.saveButton}>Save</button>
+                        <button onClick={handleCancelEdit} className={styles.cancelButton}>Cancel</button>
+                    </>
+                ) : (
+                    <>
+                        <button onClick={handleEditClick} className={styles.editProfileLink}>Edit Profile</button>
+                        <button onClick={handleDeleteUser} className={styles.deleteUserButton}>Delete Account</button>
+                    </>
+                )}
             </div>
 
             <div className={styles.commentsSection}>
