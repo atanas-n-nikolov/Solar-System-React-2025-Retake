@@ -42,3 +42,28 @@
 .comment form {
     margin-top: 1em;
 }
+
+.comment .editTextArea {
+    width: 100%;
+    padding: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 0.2em;
+    resize: vertical;
+    font-size: 1em;
+    line-height: 1.4;
+    color: #333;
+    background-color: #f9f9f9;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.comment .editTextArea:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.comment .editTextArea::placeholder {
+    color: #aaa;
+}

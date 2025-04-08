@@ -1,92 +1,23 @@
 import { useParams } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
-import { editCommentInPlanet, deleteCommentFromPlanet, addCommentToPlanet, usePlanet } from '../../../api/planetsAPI';
+import { usePlanet } from '../../../api/planetsAPI';
 import { useNotificationContext } from '../../../context/NotificationContext';
-import { useState } from 'react';
 
 import style from './PlanetDetails.module.css';
 import { CommentForm } from '../../auth/user/comments/commentForm/CommentForm';
 import { Comment } from '../../auth/user/comments/comment/Comment';
 
 export default function PlanetDetails() {
-    const { isAuthenticated, _id: userId } = useAuth();
+    const { isAuthenticated } = useAuth();
     const { planetId } = useParams();
     const { planet, setPlanet, error, loading } = usePlanet(planetId);
     const { showNotification } = useNotificationContext();
-    const [newComment, setNewComment] = useState('');
-    const [pending, setIsPending] = useState(false);
-    const [editCommentId, setEditCommentId] = useState(null);
-    const [editText, setEditText] = useState('');
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    if (loading) return <div>Loading...</div>;
+    if (error) showNotification(error, 'error');
 
-    if (error) {
-        showNotification(error, 'error');
-    }
-
-    const handleSubmit = async (newComment) => {
-        setIsPending(true);
-        if (!newComment.trim()) {
-            showNotification("Comment cannot be empty", 'error');
-            return;
-        }
-
-        try {
-            const response = await addCommentToPlanet(planetId, newComment);
-            if (response) {
-                setPlanet(response);
-                setNewComment('');
-            };
-            setIsPending(false)
-        } catch (err) {
-            showNotification('Failed to add comment.', 'error');
-            console.error('Error adding comment:', err);
-            setIsPending(false)
-        }
-    };
-
-    const handleCommentDelete = async (commentId) => {
-        try {
-            const success = await deleteCommentFromPlanet(planetId, commentId);
-            if (success) {
-                setPlanet(prevPlanet => {
-                    const updatedComments = prevPlanet.comments.filter(comment => comment._id !== commentId);
-                    return { ...prevPlanet, comments: updatedComments };
-                });
-            }
-        } catch (err) {
-            showNotification('Failed to delete comment.', 'error');
-            console.error('Error deleting comment:', err);
-        }
-    };
-
-    const handleEditClick = (commentId, currentText) => {
-        setEditCommentId(commentId);
-        setEditText(currentText);
-    };
-
-    const handleEditSubmit = async () => {
-        if (!editText.trim()) {
-            showNotification("Comment text cannot be empty", 'error');
-            return;
-        }
-
-        try {
-            const updatedPlanet = await editCommentInPlanet(planetId, editCommentId, editText);
-            setPlanet(updatedPlanet);
-            setEditCommentId(null);
-            setEditText('');
-        } catch (err) {
-            showNotification('Failed to update comment.', 'error');
-            console.error('Error editing comment:', err);
-        }
-    };
-
-    const handleCancel = () => {
-        setEditCommentId(null);
-        setEditText('');
+    const updatePlanetComments = (updatedComments) => {
+        setPlanet((prev) => ({ ...prev, comments: updatedComments }));
     };
 
     return (
@@ -115,22 +46,19 @@ export default function PlanetDetails() {
                         planet.comments.map((comment) => (
                             <Comment
                                 key={comment._id}
+                                planetId={planetId}
                                 comment={comment}
-                                onDelete={handleCommentDelete}
-                                editCommentId={editCommentId}
-                                isUserComment={comment.user._id === userId}
-                                onEdit={handleEditClick}
-                                onCancel={handleCancel}
-                                onEditSubmit={handleEditSubmit}
-                                editText={editText}
-                                setEditText={setEditText}
+                                updatePlanetComments={updatePlanetComments}
                             />
                         ))
                     ) : (
                         <p>No comments yet.</p>
                     )}
 
-                    <CommentForm onSubmit={handleSubmit} initialValue={newComment} disabled={pending} />
+                    <CommentForm
+                        planetId={planetId}
+                        updatePlanetComments={updatePlanetComments}
+                    />
                 </div>
             )}
         </div>

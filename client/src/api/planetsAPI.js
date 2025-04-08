@@ -65,14 +65,15 @@ export const addCommentToPlanet = async (planetId, commentText) => {
 export const deleteCommentFromPlanet = async (planetId, commentId) => {
     try {
         const response = await request.delete(`${baseUrl}/${planetId}/comment/${commentId}`);
-
+        
         const data = await response;
 
         if (data.message === 'Comment deleted successfully') {
-            return true;
+            return data.planet.comments;
         } else {
             throw new Error('Failed to delete comment');
-        }
+        };
+
     } catch (err) {
         console.error('Error deleting comment:', err);
         throw err;
