@@ -1,72 +1,40 @@
-import { useContext, useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from "react-router";
-import { Link } from 'react-router';
-import { updateUserData, useQuizWithUserAnswers } from '../../../api/userAPI';
+import { useContext, useEffect, useState } from "react";
+import { useParams, Link } from "react-router";
 import { UserContext } from "../../../context/UserContext";
-import { useSubmitQuiz } from "../../../api/quizAPI";
-
+import { useQuizWithUserAnswers } from "../../../api/userAPI";
 import style from './QuizForm.module.css';
+import { useQuizForm } from "../../../hooks/useQuizForm";
 
 export default function QuizForm() {
     const { category } = useParams();
     const { _id } = useContext(UserContext);
     const { quiz, allAnswered, noQuizInCategory, error } = useQuizWithUserAnswers(_id, category);
 
-    const [seconds, setSeconds] = useState(3);
-    const navigate = useNavigate();
-    const hasNavigated = useRef(false);
-
-    // Състояние за отговорите на потребителя
     const [userAnswers, setUserAnswers] = useState({});
 
-    // Функция за обработка на избор на отговор
-    const handleAnswerChange = (questionId, answer) => {
+    const {
+        seconds,
+        handleAnswerChange,
+        handleSubmit,
+        result,
+        loading,
+        submitError
+    } = useQuizForm(quiz, userAnswers, _id);
+
+    const handleAnswerChangeLocal = (questionId, answer) => {
         setUserAnswers(prevAnswers => ({
             ...prevAnswers,
             [questionId]: answer
         }));
+        handleAnswerChange(questionId, answer);
     };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        submitQuiz();
-    };
-
-    const { submitQuiz, result, loading, submitError } = useSubmitQuiz(quiz, userAnswers);
-
-    useEffect(() => {
-        if (result !== null && result !== undefined) {
-            if (_id) {
-                updateUserData(_id, { score: result.score, answers: result.correctAnswers })
-                    .then((response) => {
-                        console.log("User score updated:", response);
-                    })
-                    .catch((err) => {
-                        console.error("Error updating user score:", err);
-                    });
-            }
-
-            const timer = setInterval(() => {
-                setSeconds((prev) => {
-                    if (prev === 1) {
-                        clearInterval(timer);
-                        if (!hasNavigated.current) {
-                            hasNavigated.current = true;
-                            setTimeout(() => {
-                                navigate('/');
-                            }, 0);
-                        }
-                    }
-                    return prev - 1;
-                });
-            }, 1000);
-
-            return () => clearInterval(timer);
-        }
-    }, [result, navigate, _id]);
 
     if (noQuizInCategory) {
         return <h2>No quiz in this category yet</h2>;
+    }
+
+    if (error || submitError) {
+        return <h2>There was an error. Please try again later.</h2>;
     }
 
     return (
@@ -77,21 +45,13 @@ export default function QuizForm() {
                     <h2>{result.score}/{quiz.length}</h2>
                     <p>
                         You will be redirected to Quiz after <span className={style.timer}>{seconds}</span> seconds
-                        or <Link to="/quiz" className={style.redirect-link}>click here</Link> to go now.
+                        or <Link to="/quiz" className={style.redirectLink}>click here</Link> to go now.
                     </p>
-                    <div>
-                        <h3>Correct Answers:</h3>
-                        <ul>
-                            {result.correctAnswers.map((answer) => (
-                                <li key={answer.questionId}>Question ID: {answer.questionId}, Correct Answer: {answer.correctAnswer}</li>
-                            ))}
-                        </ul>
-                    </div>
                 </div>
             )}
 
             {result === null && !error && quiz.length > 0 && (
-                <div className={style.quiz-form}>
+                <div className={style.quizForm}>
                     <form onSubmit={handleSubmit}>
                         {quiz.map((question) => (
                             <div key={question._id}>
@@ -104,8 +64,8 @@ export default function QuizForm() {
                                                 id={`${question._id}-${option}`}
                                                 name={question._id}
                                                 value={option}
-                                                checked={userAnswers[question._id] === option} // Контролирано състояние
-                                                onChange={() => handleAnswerChange(question._id, option)} // Обработва избора
+                                                checked={userAnswers[question._id] === option}
+                                                onChange={() => handleAnswerChangeLocal(question._id, option)}
                                             />
                                             <label htmlFor={`${question._id}-${option}`}>{option}</label>
                                         </div>

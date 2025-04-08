@@ -1,6 +1,5 @@
 import { useQuiz } from '../../api/quizAPI';
 import { Link } from 'react-router';
-import { groupByCategory } from '../../util/groupByCategory';
 
 import style from './Quiz.module.css';
 import { useNotificationContext } from '../../context/NotificationContext';
@@ -17,8 +16,6 @@ export default function Quiz() {
         showNotification(error, 'error');  
     };
 
-    const categories = groupByCategory(quiz);
-
     return (
         <div className={style.quizContainer}>
             <h1 className={style.quizTitle}>Quiz Quest</h1>
@@ -30,12 +27,11 @@ export default function Quiz() {
             </div>
             {quiz.length > 0 ? (
                 <div className={style.quizGrid}>
-                    {Object.keys(categories).map((category) => (
-                        <div key={category} className={style.quizCard}>
-                            <h2 className={style.quizCardTitle}>{category} Missions</h2>
-                            <p className={style.quizCardCount}>Number of Questions: {categories[category].length}</p>
-                            <p className={style.quizCardDifficulty}>Mission Level: {category}</p>
-                            <Link to={`/quiz/${category}`} className={style.quizButton}>Launch Mission</Link>
+                    {quiz.map((q) => (
+                        <div key={q.category} className={style.quizCard}>
+                            <h2 className={style.quizCardTitle}>Mission {q.category}</h2>
+                            <p className={style.quizCardCount}>Number of Questions: {q.count}</p>
+                            <Link to={`/quiz/${q.category}`} className={style.quizButton}>Launch Mission</Link>
                         </div>
                     ))}
                 </div>
