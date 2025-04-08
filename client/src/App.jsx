@@ -19,6 +19,7 @@ import './App.css';
 import PlanetDetails from './components/planets/planetDetails/PlanetDetails';
 import QuizForm from './components/quiz/quizForm/QuizForm';
 import UserProfile from './components/auth/user/UserProfile';
+import AdminProfile from './components/auth/admin/AdminProfile';
 
 
 export default function App() {
@@ -43,6 +44,9 @@ export default function App() {
                                 <Route path="/quiz" element={<Quiz />} />
                                 <Route path="/quiz/:category" element={<QuizForm />} />
                                 <Route path="/profile/:userId" element={<UserProfile />} />
+                                <Route path="/admin-dashboard" element={<AdminProfile />} />
+                                {/* <Route path="/create-fact" element={<CreateFact />} /> */}
+                                {/* <Route path="/create-planet" element={<CreatePlanet />} /> */}
                             </Route>
                         </Routes>
                     </main>

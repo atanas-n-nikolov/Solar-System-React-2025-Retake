@@ -5,7 +5,7 @@ import styles from '../header/Header.module.css';
 
 export default function Header() {
 
-    const { email, isAuthenticated, _id } = useAuth();
+    const { email, isAuthenticated, _id, role } = useAuth();
 
     return (
         <header className={styles.header}>
@@ -39,11 +39,17 @@ export default function Header() {
                                         Quiz
                                     </Link>
                                 </li>
-                                <li className={styles.navItem}>
+                                {role === 'admin' ? (
+                                    <li className={styles.navItem}>
+                                        <Link to={'admin-dashboard'} className={styles.navLink}>
+                                            {email}
+                                        </Link>
+                                    </li>
+                                ) : <li className={styles.navItem}>
                                     <Link to={`/profile/${_id}`} className={styles.navLink}>
                                         {email}
                                     </Link>
-                                </li>
+                                </li>}
                                 <li className={styles.navItem}>
                                     <Link to="/logout" className={styles.navLink}>
                                         Logout
@@ -52,10 +58,10 @@ export default function Header() {
                             </>
                         ) : (
                             <li className={styles.navItem}>
-                            <Link to="/sign-up" className={styles.navLink}>
-                                Sign up
-                            </Link>
-                        </li>
+                                <Link to="/sign-up" className={styles.navLink}>
+                                    Sign up
+                                </Link>
+                            </li>
                         )}
                     </ul>
                 </nav>

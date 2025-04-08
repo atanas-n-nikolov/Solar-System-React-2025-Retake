@@ -22,6 +22,7 @@ export default function useAuth() {
     return {
         ...authData,
         userId: authData?._id || localStorage.getItem('_id'),
+        role: authData?.role,
         request: {
             get: requestWrapper.bind(null, 'GET'),
             post: requestWrapper.bind(null, 'POST'),

@@ -5,10 +5,17 @@ export default function UserProvider({ children }) {
     const [authData, setAuthData] = useLocalStorageState('auth', {});
 
     const userLoginHandler = (resultData) => {
+        const { email, _id, accessToken, role, firstName, lastName } = resultData;
 
-        const { email, _id, accessToken } = resultData;
+        const minimalData = {
+            email,
+            _id,
+            accessToken,
+            firstName,
+            lastName,
+            ...(role === 'admin' ? { role } : {})
+        };
 
-        const minimalData = { email, _id, accessToken };
         setAuthData(minimalData);
     };
 
@@ -19,7 +26,12 @@ export default function UserProvider({ children }) {
     const isAuthenticated = !!authData?.accessToken;
 
     return (
-        <UserContext.Provider value={{ ...authData, userLoginHandler, userLogoutHandler, isAuthenticated }}>
+        <UserContext.Provider value={{
+            ...authData,
+            userLoginHandler,
+            userLogoutHandler,
+            isAuthenticated
+        }}>
             {children}
         </UserContext.Provider>
     );

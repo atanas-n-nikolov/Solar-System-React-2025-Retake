@@ -67,11 +67,11 @@ const userService = {
 };
 
 async function generateResponse(user) {
-    const { _id, firstName, lastName, email, score } = user;
+    const { _id, firstName, lastName, email, score, role } = user;
 
-    const token = await jwt.sign({ _id, firstName, lastName, email, score }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    const token = await jwt.sign({ _id, firstName, lastName, email, score, role }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-    return { _id, firstName, lastName, email, score, accessToken: token };
+    return { _id, firstName, lastName, email, score, accessToken: token, role };
 };
 
 export default userService;
