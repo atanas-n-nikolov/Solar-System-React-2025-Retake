@@ -1,12 +1,33 @@
 import { useEffect, useState } from "react";
-import request from "../util/request";
+import request from "./request";
 
-const baseUrl = 'http://localhost:3001/profile';
+const baseUrl = 'http://localhost:3000/profile';
+
 
 export const getUserData = (userId) => {
-    return request.get(`${baseUrl}/${userId}`).catch(err => {
-        throw err;
-    });
+    return request.get(`${baseUrl}/${userId}`)
+        .catch(err => {
+            throw new Error(err.response?.data?.message || "Failed to fetch user data.");
+        });
+};
+
+export const fetchUserProfileData = async (userId, showNotification) => {
+    try {
+        const response = await getUserData(userId);
+        
+        if (response && response.user && response.comments) {
+            return {
+                userData: response.user,
+                comments: response.comments,
+                answers: response.user.answers || [],
+            };
+        } else {
+            throw new Error("User profile or comments not found.");
+        }
+    } catch (err) {
+        showNotification(err.message || "Error fetching user profile and comments.", "error");
+        throw new Error(err.message || "Error fetching user profile and comments.");
+    }
 };
 
 export const updateUserData = (userId, updatedData) => {

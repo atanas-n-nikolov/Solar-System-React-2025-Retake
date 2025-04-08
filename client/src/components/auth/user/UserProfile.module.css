@@ -1,0 +1,108 @@
+.userProfile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2em auto;
+    padding: 2em;
+    max-width: 1400px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profileData {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profileData h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.profileData p {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.editProfileLink,
+.deleteUserButton {
+    margin-top: 20px;
+    width: auto;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.editProfileLink {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    margin-right: 1em;
+}
+
+.editProfileLink:hover {
+    background-color: #0056b3;
+}
+
+.deleteUserButton {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.deleteUserButton:hover {
+    background-color: #c82333;
+}
+
+.commentsSection,
+.answeredQuestionsSection {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.commentsSection h2,
+.answeredQuestionsSection h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.commentsSection ul,
+.answeredQuestionsSection ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.commentsSection li,
+.answeredQuestionsSection li {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.commentsSection p,
+.answeredQuestionsSection p {
+    margin: 5px 0;
+}
+
+.commentsSection a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.commentsSection a:hover {
+    text-decoration: underline;
+}
+
+.errorMessage {
+    color: #dc3545;
+    font-size: 1.1rem;
+    margin-top: 20px;
+}

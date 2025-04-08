@@ -48,3 +48,42 @@ export const useLatestQuiz = () => {
 
     return { latestQuiz, error, loading };
 };
+
+export const useSubmitQuiz = (quizData, userAnswers) => {
+    const [result, setResult] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const calculateScore = () => {
+        let score = 0;
+        const correctAnswers = [];
+
+        quizData.forEach((question) => {
+            if (userAnswers[question._id] === question.correctAnswer) {
+                score += 1;
+                correctAnswers.push({
+                    questionId: question._id,
+                    category: question.category,
+                    title: question.title,
+                    correctAnswer: question.correctAnswer
+                });
+            }
+        });
+
+        return { score, correctAnswers };
+    };
+
+    const submitQuiz = () => {
+        setLoading(true);
+        try {
+            const { score, correctAnswers } = calculateScore();
+            setResult({ score, correctAnswers });
+        } catch (err) {
+            setError(err.message || "Something went wrong!");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { submitQuiz, result, loading, error };
+};

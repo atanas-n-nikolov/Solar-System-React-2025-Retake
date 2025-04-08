@@ -2,6 +2,8 @@ import { Router } from "express";
 import userService from "../services/userService.js";
 import catchError from "../util/catchError.js";
 import { isAuth } from "../middlewares/authMiddleware.js";
+import User from '../models/User.js'
+import Planet from '../models/Planet.js'
 
 const userController = Router();
 
@@ -42,15 +44,17 @@ userController.get('/profile/:userId', isAuth, async (req, res) => {
             .populate('comments.user', 'firstName lastName')
             .exec();
 
-            const userComments = planets.flatMap(planet =>
-                planet.comments
-                    .filter(comment => comment.user && comment.user._id && comment.user._id.toString() === userId)
-                    .map(comment => ({
-                        planetName: planet.name,
-                        commentText: comment.text,
-                        createdAt: comment.createdAt,
-                    }))
-            );
+        const userComments = planets.flatMap(planet =>
+            planet.comments
+                .filter(comment => comment.user && comment.user._id.toString() === userId)
+                .map(comment => ({
+                    planetId: planet._id,
+                    commentId: comment._id,
+                    planetName: planet.name,
+                    commentText: comment.text,
+                    createdAt: comment.createdAt,
+                }))
+        );
 
         res.status(200).json({
             user: {

@@ -65,7 +65,6 @@ export function Comment({ planetId, comment, updatePlanetComments }) {
         <div className={style.comment}>
             <p>
                 <strong>{comment.user.firstName} {comment.user.lastName}</strong>:
-            </p>
             {isEditing ? (
                     <textarea
                         value={editedText}
@@ -76,6 +75,8 @@ export function Comment({ planetId, comment, updatePlanetComments }) {
                 ) : (
                     comment.text
                 )}
+            </p>
+
 
             <p className={style.date}>
                 <em>{created.toLocaleString()} (created)</em>

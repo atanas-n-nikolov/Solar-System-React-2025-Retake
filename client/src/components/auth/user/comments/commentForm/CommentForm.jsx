@@ -17,8 +17,6 @@ export function CommentForm({ planetId, updatePlanetComments, disabled, closeFor
 
         try {
             const updated = await addCommentToPlanet(planetId, comment);
-            console.log(updated);
-            
             updatePlanetComments(updated.comments);
             setComment('');
             showNotification("Comment added successfully", 'success');

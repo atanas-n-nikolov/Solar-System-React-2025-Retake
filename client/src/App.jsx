@@ -17,6 +17,8 @@ import Logout from './components/auth/logout/Logout';
 
 import './App.css';
 import PlanetDetails from './components/planets/planetDetails/PlanetDetails';
+import QuizForm from './components/quiz/quizForm/QuizForm';
+import UserProfile from './components/auth/user/UserProfile';
 
 
 export default function App() {
@@ -39,6 +41,8 @@ export default function App() {
                             <Route element={<UserGuard />}>
                                 <Route path="/logout" element={<Logout />} />
                                 <Route path="/quiz" element={<Quiz />} />
+                                <Route path="/quiz/:category" element={<QuizForm />} />
+                                <Route path="/profile/:userId" element={<UserProfile />} />
                             </Route>
                         </Routes>
                     </main>
