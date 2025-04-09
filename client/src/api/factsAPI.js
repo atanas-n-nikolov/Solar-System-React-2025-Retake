@@ -29,3 +29,30 @@ export const useFact = () => {
 
     return { fact, error, loading };
 };
+
+export const useAddFact = () => {
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    const addFact = async (factData) => {
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+
+        try {
+            const response = await request.post(`${baseUrl}/create`, factData);
+            if (response && response._id) {
+                setSuccess(true);
+            } else {
+                setError('Failed to create fact. Please try again.');
+            }
+        } catch (error) {
+            setError('Failed to create fact. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { addFact, loading, error, success };
+};

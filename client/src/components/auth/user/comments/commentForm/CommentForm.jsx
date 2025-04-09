@@ -3,7 +3,7 @@ import { useNotificationContext } from "../../../../../context/NotificationConte
 import { addCommentToPlanet } from "../../../../../api/planetsAPI";
 import style from './CommentForm.module.css';
 
-export function CommentForm({ planetId, updatePlanetComments, disabled, closeForm }) {
+export function CommentForm({ planetId, updatePlanetComments, disabled }) {
     const [comment, setComment] = useState('');
     const { showNotification } = useNotificationContext();
 

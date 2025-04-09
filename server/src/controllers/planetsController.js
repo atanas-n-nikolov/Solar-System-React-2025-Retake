@@ -20,6 +20,36 @@ planetController.get("/planets", async (req, res) => {
     };
 });
 
+planetController.post('/planets/create', isAdmin, isAuth, async (req, res) => {
+    const { name, type, image, distanceToSun, size, description } = req.body;
+    const comments = [];
+    const ownerId = req.user._id;
+
+    if (!name || !type || !image || !distanceToSun || !size || !description) {
+        return res.status(400).json({ message: 'All fields are required.' });
+    };
+
+    try {
+        const planet = await Planet.create({ name, type, image, distanceToSun, size, description, comments, ownerId });
+        res.status(201).json(planet);
+    } catch (error) {
+        const errorMessage = catchError(error)
+        res.status(400).json({ message: errorMessage });
+    };
+});
+
+planetController.delete('/planets/:planetId/delete', isAdmin, isAuth, async (req, res) => {
+    const { planetId } = req.params;
+
+    try {
+        const planet = await Planet.findByIdAndDelete(planetId);
+        res.status(201).json(planet);
+    } catch (error) {
+        const errorMessage = catchError(error)
+        res.status(400).json({ message: errorMessage });
+    };
+});
+
 planetController.post("/planets", isAuth, isAdmin, async (req, res) => {
     const { name, type, image, distanceToSun, size, description, comments, owner } = req.body;
 

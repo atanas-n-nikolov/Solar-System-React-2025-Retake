@@ -49,6 +49,33 @@ export const useLatestQuiz = () => {
     return { latestQuiz, error, loading };
 };
 
+export const useAddQuiz = () => {
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    const addQuiz = async (quizData) => {
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+
+        try {
+            const response = await request.post(`${baseUrl}/create`, quizData);
+            if (response && response._id) {
+                setSuccess(true);
+            } else {
+                setError('Failed to create fact. Please try again.');
+            }
+        } catch (error) {
+            setError('Failed to create fact. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { addQuiz, loading, error, success };
+};
+
 export const useSubmitQuiz = (quizData, userAnswers) => {
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);

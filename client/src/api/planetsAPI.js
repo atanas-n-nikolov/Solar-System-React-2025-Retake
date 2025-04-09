@@ -49,6 +49,59 @@ export const usePlanet = (planetId) => {
     return { planet, setPlanet, loading, error };
 };
 
+export const useAddPlanet = () => {
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    const addPlanet = async (planetData) => {
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+
+        try {
+            const response = await request.post(`${baseUrl}/create`, planetData);
+            if (response && response._id) {
+                setSuccess(true);
+            } else {
+                setError('Failed to create fact. Please try again.');
+            }
+        } catch (error) {
+            setError('Failed to create fact. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { addPlanet, loading, error, success };
+};
+
+
+export const useDeletePlanet = () => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
+
+    const deletePlanet = async (planetId) => {
+        setLoading(true);
+        try {
+            const response = await request.delete(`${baseUrl}/${planetId}/delete`);
+            if (response && response._id) {
+                setSuccess(true);
+                setError(null);
+            } else {
+                setError('Failed to delete planet. Please try again.');
+            }
+        } catch (err) {
+            setError('Failed to delete planet. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { deletePlanet, error, loading, success };
+};
+
 export const addCommentToPlanet = async (planetId, commentText) => {
     try {
         const response = await request.post(`${baseUrl}/${planetId}/comment`, {
@@ -65,7 +118,7 @@ export const addCommentToPlanet = async (planetId, commentText) => {
 export const deleteCommentFromPlanet = async (planetId, commentId) => {
     try {
         const response = await request.delete(`${baseUrl}/${planetId}/comment/${commentId}`);
-        
+
         const data = await response;
 
         if (data.message === 'Comment deleted successfully') {

@@ -20,6 +20,10 @@ import PlanetDetails from './components/planets/planetDetails/PlanetDetails';
 import QuizForm from './components/quiz/quizForm/QuizForm';
 import UserProfile from './components/auth/user/UserProfile';
 import AdminProfile from './components/auth/admin/AdminProfile';
+import CreateFact from './components/auth/admin/create/fact/CreateFact';
+import CreateQuizForm from './components/auth/admin/create/quiz/CreateQuiz';
+import CreateQuiz from './components/auth/admin/create/quiz/CreateQuiz';
+import CreatePlanet from './components/auth/admin/create/planet/CreatePlanet';
 
 
 export default function App() {
@@ -45,8 +49,9 @@ export default function App() {
                                 <Route path="/quiz/:category" element={<QuizForm />} />
                                 <Route path="/profile/:userId" element={<UserProfile />} />
                                 <Route path="/admin-dashboard" element={<AdminProfile />} />
-                                {/* <Route path="/create-fact" element={<CreateFact />} /> */}
-                                {/* <Route path="/create-planet" element={<CreatePlanet />} /> */}
+                                <Route path="/create-fact" element={<CreateFact />} />
+                                <Route path="/create-quiz" element={<CreateQuiz />} />
+                                <Route path="/create-planet" element={<CreatePlanet />} />
                             </Route>
                         </Routes>
                     </main>

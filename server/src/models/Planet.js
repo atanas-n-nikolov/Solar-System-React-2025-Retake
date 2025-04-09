@@ -35,7 +35,7 @@ const planetSchema = new Schema({
       updatedAt: { type: Date, default: Date.now },
     }
   ],
-  owner: { type: Types.ObjectId, ref: 'User', required: true },
+  ownerId: { type: Types.ObjectId, ref: 'User', required: true },
 });
 
 const Planet = model('Planet', planetSchema);
