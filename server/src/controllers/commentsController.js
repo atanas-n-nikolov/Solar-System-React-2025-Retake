@@ -17,7 +17,7 @@ commentsController.post('/planets/:planetId/comment', isAuth, async (req, res) =
 
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: 'User not found' });
-
+        
         const newComment = {
             user: userId,
             text,
@@ -28,6 +28,7 @@ commentsController.post('/planets/:planetId/comment', isAuth, async (req, res) =
         user.comments.push(planetId);
 
         await planet.save();
+
         await User.findByIdAndUpdate(userId, { $set: { comments: user.comments } });
 
         const updatedPlanet = await Planet.findById(planetId)

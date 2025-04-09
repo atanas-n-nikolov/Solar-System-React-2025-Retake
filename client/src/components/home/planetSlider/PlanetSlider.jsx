@@ -12,7 +12,7 @@ export default function PlanetSlider() {
     const { showNotification } = useNotificationContext();
 
     useEffect(() => {
-        if(error) {
+        if (error) {
             showNotification(error, 'error');
         };
     }, [error, showNotification]);
@@ -21,7 +21,7 @@ export default function PlanetSlider() {
         dots: true,
         infinite: true,
         speed: 600,
-        slidesToShow: 1,
+        slidesToShow: 4,
         slidesToScroll: 1,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
@@ -31,17 +31,17 @@ export default function PlanetSlider() {
         return <h2 className={style.loading}>Loading...</h2>;
     };
 
+    if (!planets?.length) {
+        return null;
+    };
+
     return (
-        <div className={style.planetsContainer} style={{ padding: planets.length === 0 ? "0" : "" }}>
-            {planets.length > 0 ? (
-                <Slider className="catalog-slider" {...settings}>
-                    {planets.map((planet) => (
-                        <PlanetCard key={planet._id} planet={planet} />
-                    ))}
-                </Slider>
-            ) : (
-                <p>No planets available at the moment.</p>
-            )}
+        <div className={style.planetsContainer}>
+            <Slider className="catalog-slider" {...settings}>
+                {planets.map((planet) => (
+                    <PlanetCard key={planet._id} planet={planet} />
+                ))}
+            </Slider>
         </div>
     );
 }

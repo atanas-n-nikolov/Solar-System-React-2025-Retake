@@ -18,7 +18,7 @@ export default function FactOfTheDay() {
     };
 
     if (!fact) {
-        return <h2 className={style.loading}>No fact for today available.</h2>;
+        return null;
     };
 
     return (

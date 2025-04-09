@@ -11,6 +11,7 @@ export default function UserProfile() {
     const navigate = useNavigate();
     const { userLogoutHandler } = useContext(UserContext);
     const { showNotification } = useNotificationContext();
+    const [pending, setPending] = useState(false);
 
     const { userData, comments, answers, loading, error } = useUserProfile(userId);
 
@@ -27,20 +28,22 @@ export default function UserProfile() {
                 lastName: userData.lastName,
                 email: userData.email
             });
-        }
+        };
     }, [userData]);
 
     const handleDeleteUser = async () => {
         const confirmed = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
     
         if (!confirmed) return;
-    
+        setPending(true);
         try {
             const success = await deleteUser(userId, userLogoutHandler);
+            setPending(false);
             if (success) navigate('/');
         } catch (err) {
+            setPending(false);
             showNotification("Error deleting user.", 'error');
-        }
+        };
     };
 
     const handleEditClick = () => setIsEditing(true);
@@ -59,15 +62,18 @@ export default function UserProfile() {
     };
 
     const handleSave = async () => {
+        setPending(true)
         try {
             const updated = await updateUserData(userId, formData);
             if (updated) {
                 showNotification("Profile updated successfully!", 'success');
                 setIsEditing(false);
-            }
+            };
+            setPending(false);
         } catch (err) {
             showNotification("Error updating profile.", 'error');
-        }
+            setPending(false);
+        };
     };
 
     if (loading) return <div>Loading...</div>;
@@ -114,13 +120,13 @@ export default function UserProfile() {
             <div className={styles.buttonsContainer}>
                 {isEditing ? (
                     <>
-                        <button onClick={handleSave} className={styles.saveButton}>Save</button>
+                        <button onClick={handleSave} className={styles.saveButton} disabled={pending}>Save</button>
                         <button onClick={handleCancelEdit} className={styles.cancelButton}>Cancel</button>
                     </>
                 ) : (
                     <>
                         <button onClick={handleEditClick} className={styles.editProfileLink}>Edit Profile</button>
-                        <button onClick={handleDeleteUser} className={styles.deleteUserButton}>Delete Account</button>
+                        <button onClick={handleDeleteUser} className={styles.deleteUserButton} disabled={pending}>Delete Account</button>
                     </>
                 )}
             </div>

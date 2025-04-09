@@ -25,11 +25,13 @@ export function Comment({ planetId, comment, updatePlanetComments }) {
     };
 
     const handleEditSubmit = async () => {
+        const trimmedText = editedText.trim();
+
         if (!editedText.trim()) return showNotification("Comment cannot be empty", 'error');
 
         try {
             setPending(true);
-            const updated = await editCommentInPlanet(planetId, comment._id, editedText);
+            const updated = await editCommentInPlanet(planetId, comment._id, trimmedText);
             updatePlanetComments(updated.comments);
             setIsEditing(false);
             showNotification("Comment updated", 'success');

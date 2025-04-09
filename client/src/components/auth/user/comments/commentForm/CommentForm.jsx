@@ -13,10 +13,12 @@ export function CommentForm({ planetId, updatePlanetComments, disabled }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!comment.trim()) return;
+        const trimmedComment = comment.trim();
+
+        if (!trimmedComment) return;
 
         try {
-            const updated = await addCommentToPlanet(planetId, comment);
+            const updated = await addCommentToPlanet(planetId, trimmedComment);
             updatePlanetComments(updated.comments);
             setComment('');
             showNotification("Comment added successfully", 'success');

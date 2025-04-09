@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import styles from '../fact/CreateFact.module.css';
 import { useAddQuiz } from "../../../../../api/quizAPI";
 import { useNavigate } from "react-router";
+import { useNotificationContext } from "../../../../../context/NotificationContext";
 
 export default function CreateQuiz() {
     const { addQuiz, loading, error, success } = useAddQuiz();
+    const { showNotification } = useNotificationContext();
     const navigate = useNavigate();
     const [quizData, setQuizData] = useState({
         title: "",
@@ -23,6 +25,10 @@ export default function CreateQuiz() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if(!quizData.title || !quizData.category || !quizData.options || !quizData.correctAnswer) {
+            return showNotification("All fields are required.", "error");
+        }
         addQuiz(quizData);
         navigate(-1);
     };

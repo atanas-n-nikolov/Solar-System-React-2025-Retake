@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useParams, Link } from "react-router";
 import { UserContext } from "../../../context/UserContext";
 import { useQuizWithUserAnswers } from "../../../api/userAPI";
@@ -11,6 +11,7 @@ export default function QuizForm() {
     const { quiz, allAnswered, noQuizInCategory, error } = useQuizWithUserAnswers(_id, category);
 
     const [userAnswers, setUserAnswers] = useState({});
+    const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
     const {
         seconds,
@@ -27,6 +28,17 @@ export default function QuizForm() {
             [questionId]: answer
         }));
         handleAnswerChange(questionId, answer);
+    };
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (Object.keys(userAnswers).length !== quiz.length) {
+            return alert("Please answer all the questions before submitting!");
+        }
+        
+        setIsFormSubmitted(true);
+        await handleSubmit(e);
     };
 
     if (noQuizInCategory) {
@@ -52,13 +64,13 @@ export default function QuizForm() {
 
             {result === null && !error && quiz.length > 0 && (
                 <div className={style.quizForm}>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleFormSubmit}>
                         {quiz.map((question) => (
-                            <div key={question._id}>
+                            <div key={question._id} className={style.question}>
                                 <h2>{question.title}</h2>
-                                <div>
+                                <div className={style.options}>
                                     {question.options.map((option, index) => (
-                                        <div key={index}>
+                                        <div key={index} className={style.option}>
                                             <input
                                                 type="radio"
                                                 id={`${question._id}-${option}`}
@@ -76,9 +88,9 @@ export default function QuizForm() {
                         <button
                             type="submit"
                             className={style.quizButton}
-                            disabled={loading}
+                            disabled={loading || isFormSubmitted}
                         >
-                            Submit
+                            {isFormSubmitted ? 'Submitting...' : 'Submit'}
                         </button>
                     </form>
                 </div>

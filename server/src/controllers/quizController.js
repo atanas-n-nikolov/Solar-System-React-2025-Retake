@@ -63,12 +63,13 @@ quizController.post('/quiz/create', isAdmin, isAuth, async (req, res) => {
 
 quizController.get('/quiz/latest', async (req, res) => {
     try {
-        const quiz = await Quiz.findOne().sort({ createdOn: -1 }).limit(1);
+        const quiz = await Quiz.findOne().sort({ createdAt: -1 }).limit(1);
 
-        if (quiz.length === 0) {
-            return res.status(200).json([]);
+        if(!quiz) {
+            return res.status(200).json({});
         };
-
+        console.log(quiz);
+        
         res.status(200).json(quiz);
     } catch (error) {
         const errorMessage = catchError(error);

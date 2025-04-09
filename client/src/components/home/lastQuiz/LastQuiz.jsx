@@ -32,7 +32,7 @@ export default function LastQuiz() {
                 <div className={style.homeRight}>
                     <h2>Last Added Quiz</h2>
 
-                    {latestQuiz ? (
+                    {latestQuiz?.title ? (
                         <>
                             <div className={style.lastQuizCard}>
                                 <h3>{latestQuiz.title}</h3>

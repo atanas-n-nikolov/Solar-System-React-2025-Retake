@@ -2,9 +2,11 @@ import { useState } from "react";
 import styles from './CreateFact.module.css';
 import { useAddFact } from "../../../../../api/factsAPI";
 import { useNavigate } from "react-router";
+import { useNotificationContext } from "../../../../../context/NotificationContext";
 
 export default function CreateFact() {
     const { addFact, loading, error, success } = useAddFact();
+    const { showNotification } = useNotificationContext();
     const navigate = useNavigate();
     const [factData, setFactData] = useState({
         title: "",
@@ -23,6 +25,11 @@ export default function CreateFact() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!factData.title.trim() || !factData.date.trim() || !factData.year.trim() || !factData.description.trim()) {
+            return showNotification("All fields are required.", "error");
+        };
+
         addFact(factData);
         navigate(-1);
     };

@@ -12,7 +12,7 @@ factsControler.get('/fact', async (req, res) => {
         const fact = await Facts.findOne({ date: currentDate });
 
         if (!fact) {
-            return res.status(200).json([]);
+            return res.status(200).json({});
         };
 
         res.status(200).json(fact);

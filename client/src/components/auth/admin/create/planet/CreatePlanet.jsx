@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import styles from '../fact/CreateFact.module.css';
 import { useAddPlanet } from "../../../../../api/planetsAPI";
 import { useNavigate } from "react-router";
+import { useNotificationContext } from "../../../../../context/NotificationContext";
 
 export default function CreatePlanet() {
     const { addPlanet, loading, error, success } = useAddPlanet();
+    const { showNotification } = useNotificationContext();
     const navigate = useNavigate();
     const [planetData, setPlanetData] = useState({
         name: "",
@@ -25,6 +27,11 @@ export default function CreatePlanet() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!planetData.name.trim() || !planetData.type.trim() || !planetData.image.trim() || !planetData.distanceToSun.trim() || !planetData.size.trim() || !planetData.description.trim()) {
+            return showNotification("All fields are required.", "error");
+        };
+        
         addPlanet(planetData);
         navigate(-1);
     };
