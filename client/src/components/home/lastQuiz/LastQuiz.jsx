@@ -2,17 +2,20 @@ import { Link } from 'react-router';
 import style from './LastQuiz.module.css';
 import { useLatestQuiz } from '../../../api/quizAPI';
 import { useNotificationContext } from '../../../context/NotificationContext';
+import { useEffect } from 'react';
 
 export default function LastQuiz() {
     const { latestQuiz, error, loading } = useLatestQuiz();
     const { showNotification } = useNotificationContext();
 
+    useEffect(() => {
+        if (error) {
+            showNotification(error, 'error');
+        }
+    }, [error, showNotification]);
+
     if (loading) {
         return <h2 className={style.loading}>Loading...</h2>;
-    };
-
-    if (error) {
-        showNotification(error, 'error');
     };
 
     return (

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFact } from '../../../api/factsAPI';
 import { useNotificationContext } from '../../../context/NotificationContext';
 import style from './FactOfTheDay.module.css';
@@ -6,13 +7,14 @@ export default function FactOfTheDay() {
     const { fact, error, loading } = useFact();
     const { showNotification } = useNotificationContext();
 
+    useEffect(() => {
+        if (error) {
+            showNotification(error, 'error');
+        }
+    }, [error, showNotification]);
 
     if (loading) {
         return <div>Loading...</div>;
-    };
-
-    if (error) {
-        showNotification(error, 'error');
     };
 
     if (!fact) {

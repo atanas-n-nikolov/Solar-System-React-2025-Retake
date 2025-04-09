@@ -5,10 +5,17 @@ import { NextArrow, PrevArrow } from './Arrow';
 import { useNotificationContext } from "../../../context/NotificationContext";
 
 import style from './PlanetSlider.module.css';
+import { useEffect } from "react";
 
 export default function PlanetSlider() {
     const { planets, error, loading } = usePlanets();
     const { showNotification } = useNotificationContext();
+
+    useEffect(() => {
+        if(error) {
+            showNotification(error, 'error');
+        };
+    }, [error, showNotification]);
 
     const settings = {
         dots: true,
@@ -22,10 +29,6 @@ export default function PlanetSlider() {
 
     if (loading) {
         return <h2 className={style.loading}>Loading...</h2>;
-    };
-
-    if (error) {
-        showNotification(error, 'error');
     };
 
     return (
