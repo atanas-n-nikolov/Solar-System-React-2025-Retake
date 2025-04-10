@@ -5,41 +5,41 @@ import styles from './AdminProfile.module.css';
 const AdminProfile = () => {
     return (
         <div className={styles.container}>
-            <h2>Админ профил</h2>
+            <h2>Admin Profile</h2>
 
             <div className={styles.section}>
-                <h3>Факти</h3>
+                <h3>Facts</h3>
                 <div className={styles.linksContainer}>
                     <div className={styles.linkItem}>
-                        <h4>Създаване на нов факт</h4>
+                        <h4>Create new fact</h4>
                         <Link to="/create-fact" className={styles.createLink}>
-                            Създайте нов факт
+                            Create new fact
                         </Link>
                     </div>
 
                     <div className={styles.linkItem}>
-                        <h4>Редактиране или изтриване на факт</h4>
+                        <h4>Edit or delete fact</h4>
                         <Link to="/fact/edit-fact" className={styles.editLink}>
-                            Редактиране/Изтриване на факт
+                            Edit/delete fact
                         </Link>
                     </div>
                 </div>
             </div>
 
             <div className={styles.section}>
-                <h3>Планети</h3>
+                <h3>Planets</h3>
                 <div className={styles.linksContainer}>
                     <div className={styles.linkItem}>
-                        <h4>Създаване на нова планета</h4>
+                        <h4>Create new planet</h4>
                         <Link to="/create-planet" className={styles.createLink}>
-                            Създайте нова планета
+                            Create new planet
                         </Link>
                     </div>
 
                     <div className={styles.linkItem}>
-                        <h4>Редактиране или изтриване на планета</h4>
+                        <h4>Edit or delete planet</h4>
                         <Link to="/planet/edit-planet" className={styles.editLink}>
-                            Редактиране/Изтриване на планета
+                            Edit/Delete planet
                         </Link>
                     </div>
                 </div>
@@ -49,16 +49,16 @@ const AdminProfile = () => {
                 <h3>Въпроси</h3>
                 <div className={styles.linksContainer}>
                     <div className={styles.linkItem}>
-                        <h4>Създаване на нов въпрос</h4>
+                        <h4>Create new quiz</h4>
                         <Link to="/create-quiz" className={styles.createLink}>
-                            Създайте нов въпрос
+                            Create new quiz
                         </Link>
                     </div>
 
                     <div className={styles.linkItem}>
-                        <h4>Редактиране или изтриване на въпрос</h4>
+                        <h4>Create/Edit quiz</h4>
                         <Link to="/quiz/edit-quiz" className={styles.editLink}>
-                            Редактиране/Изтриване на въпрос
+                            Create/Edit quiz
                         </Link>
                     </div>
                 </div>

@@ -43,7 +43,6 @@ export const useUpdatePlanet = () => {
         try {
             const response = await request.put(`${baseUrl}/edit`, dataToSend);
             setSuccess(true);
-            console.log('Planet updated:', response);
         } catch (error) {
             setError('Failed to update planet. Please try again later.');
             console.error('Error updating planet:', error);

@@ -27,12 +27,10 @@ const userService = {
     },
     async updateUser(userId, updateData) {
         try {
-            console.log('Attempting to update user:', { userId, updateData });
     
             const user = await User.findById(userId);
     
             if (!user) {
-                console.log('User not found with id:', userId);
                 throw new Error('User not found');
             }
     
@@ -57,7 +55,6 @@ const userService = {
     
             const updatedUser = await User.findByIdAndUpdate(userId, updatedFields, { new: true });
     
-            console.log('User successfully updated:', updatedUser);
             return updatedUser;
         } catch (err) {
             console.error('Failed to update user data:', err);

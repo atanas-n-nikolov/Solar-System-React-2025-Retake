@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import request from "./request";
 
-console.log(import.meta.env.VITE_API_URL);
-
 const baseUrl = import.meta.env.VITE_API_URL 
   ? `${import.meta.env.VITE_API_URL}/fact` 
   : 'http://localhost:3000/fact';
@@ -103,7 +101,6 @@ export const useUpdateFact = () => {
         try {
             const response = await request.put(`${baseUrl}/edit`, dataToSend);
             setSuccess(true);
-            console.log('Fact updated:', response);
         } catch (error) {
             setError('Failed to update fact. Please try again later.');
             console.error('Error updating fact:', error);
@@ -130,7 +127,6 @@ export const useDeleteFact = () => {
                 data: { factId }
             });
             setSuccess(true);
-            console.log('Fact deleted:', response.data);
         } catch (error) {
             setError('Failed to delete fact. Please try again later.');
             console.error('Error deleting fact:', error);

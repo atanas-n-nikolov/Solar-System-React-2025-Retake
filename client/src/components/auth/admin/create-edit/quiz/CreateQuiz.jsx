@@ -32,10 +32,6 @@ export default function CreateQuiz() {
             return showNotification("All fields are required, and options must have at least 2 valid answers.", "error");
         };
 
-        console.log(quizData.options);
-        console.log(quizData.correctAnswer);
-        
-
         if(!formattedOptions.includes(quizData.correctAnswer)) {
             return showNotification("The correct answer must be one of the options.", "error");
         };

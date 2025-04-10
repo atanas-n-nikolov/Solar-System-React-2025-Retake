@@ -27,7 +27,6 @@ export function useQuizForm(quiz, userAnswers, _id) {
         if (_id && result) {
             try {
                 await updateUserData(_id, { score: result.score, answers: result.correctAnswers });
-                console.log("User score updated:", result);
             } catch (err) {
                 console.error("Error updating user score:", err);
             }

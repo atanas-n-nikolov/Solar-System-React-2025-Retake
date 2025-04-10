@@ -76,7 +76,6 @@ export default function UserProfile() {
         };
     };
 
-    if (loading) return <div>Loading...</div>;
     if (error) return <div className={styles.errorMessage}>Error: {error}</div>;
 
     return (

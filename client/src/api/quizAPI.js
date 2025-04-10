@@ -84,9 +84,6 @@ export const useAddQuiz = () => {
         setError(null);
         setSuccess(false);
 
-        console.log(quizData);
-        
-
         try {
             const response = await request.post(`${baseUrl}/create`, quizData);
             if (response && response._id) {
@@ -158,7 +155,6 @@ export const useUpdateQuiz = () => {
         try {
             const response = await request.put(`${baseUrl}/edit`, dataToSend);
             setSuccess(true);
-            console.log('Quiz updated:', response);
         } catch (error) {
             setError('Failed to update quiz. Please try again later.');
             console.error('Error updating quiz:', error);
