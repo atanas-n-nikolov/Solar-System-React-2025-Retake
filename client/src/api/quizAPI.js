@@ -26,6 +26,29 @@ export const useQuiz = () => {
     return { quiz, error, loading };
 };
 
+export const useAllQuiz = () => {
+    const [quiz, setQuiz] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchQuiz = async () => {
+            try {
+                const response = await request.get(`${baseUrl}/full`);
+                setQuiz(response);
+                setLoading(false);
+            } catch (error) {
+                setError('Failed to load Quiz. Please try again later.');
+                setLoading(false);
+            };
+        };
+
+        fetchQuiz();
+    }, []);
+
+    return { quiz, error, loading };
+};
+
 export const useLatestQuiz = () => {
     const [latestQuiz, setQuiz] = useState(null);
     const [error, setError] = useState(null);
@@ -58,6 +81,9 @@ export const useAddQuiz = () => {
         setLoading(true);
         setError(null);
         setSuccess(false);
+
+        console.log(quizData);
+        
 
         try {
             const response = await request.post(`${baseUrl}/create`, quizData);
@@ -113,4 +139,58 @@ export const useSubmitQuiz = (quizData, userAnswers) => {
     };
 
     return { submitQuiz, result, loading, error };
+};
+
+export const useUpdateQuiz = () => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
+
+    const updateQuiz = async (quizId, quizData) => {
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+
+        const dataToSend = { ...quizData, quizId };
+
+        try {
+            const response = await request.put(`${baseUrl}/edit`, dataToSend);
+            setSuccess(true);
+            console.log('Quiz updated:', response);
+        } catch (error) {
+            setError('Failed to update quiz. Please try again later.');
+            console.error('Error updating quiz:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { updateQuiz, loading, error, success };
+};
+
+export const useDeleteQuiz = () => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
+
+    const deleteQuiz = async (quizId) => {
+        setLoading(true);
+        try {
+            const response = await request.delete(`${baseUrl}/delete`, {
+                data: { quizId }
+            });
+            if (response) {
+                setSuccess(true);
+                setError(null);
+            } else {
+                setError('Failed to delete quiz. Please try again.');
+            }
+        } catch (err) {
+            setError('Failed to delete quiz. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { deleteQuiz, error, loading, success };
 };

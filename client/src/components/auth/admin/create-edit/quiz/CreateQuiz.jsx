@@ -11,7 +11,7 @@ export default function CreateQuiz() {
     const [quizData, setQuizData] = useState({
         title: "",
         category: "",
-        options: "",
+        options: [],
         correctAnswer: "",
     });
 
@@ -25,11 +25,27 @@ export default function CreateQuiz() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+    
+        const formattedOptions = quizData.options.split(',').map(option => option.trim()).filter(option => option);
+    
+        if (!quizData.title.trim() || !quizData.category.trim() || formattedOptions.length < 2 || formattedOptions.some(option => !option.trim()) || !quizData.correctAnswer.trim()) {
+            return showNotification("All fields are required, and options must have at least 2 valid answers.", "error");
+        };
 
-        if(!quizData.title || !quizData.category || !quizData.options || !quizData.correctAnswer) {
-            return showNotification("All fields are required.", "error");
-        }
-        addQuiz(quizData);
+        console.log(quizData.options);
+        console.log(quizData.correctAnswer);
+        
+
+        if(!formattedOptions.includes(quizData.correctAnswer)) {
+            return showNotification("The correct answer must be one of the options.", "error");
+        };
+    
+        const quizDataToSend = {
+            ...quizData,
+            options: formattedOptions,
+        };
+    
+        addQuiz(quizDataToSend);
         navigate(-1);
     };
 
@@ -51,13 +67,18 @@ export default function CreateQuiz() {
                 </div>
                 <div className={styles.formGroup}>
                     <label htmlFor="category">Category:</label>
-                    <input
-                        type="text"
+                    <select
                         id="category"
                         name="category"
                         value={quizData.category}
                         onChange={handleInputChange}
-                    />
+                    >
+                        <option value="">Select a type</option>
+                        <option value="beginner">beginner</option>
+                        <option value="intermediate">intermediate</option>
+                        <option value="advanced">advanced</option>
+                        <option value="expert">expert</option>
+                    </select>
                 </div>
                 <div className={styles.formGroup}>
                     <label htmlFor="options">Options (comma separated):</label>
@@ -67,6 +88,7 @@ export default function CreateQuiz() {
                         name="options"
                         value={quizData.options}
                         onChange={handleInputChange}
+                        placeholder="Enter options separated by commas"
                     />
                 </div>
                 <div className={styles.formGroup}>

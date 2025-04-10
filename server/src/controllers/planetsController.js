@@ -20,6 +20,21 @@ planetController.get("/planets", async (req, res) => {
     };
 });
 
+planetController.get('/planets/all', isAdmin, isAuth, async (req, res) => {
+    try {
+        const planets = await Planet.find({}, '_id name');
+
+        if (planets.length === 0) {
+            return res.status(200).json([]);
+        };
+
+        res.status(200).json(planets);
+    } catch (error) {
+        const errorMessage = catchError(error);
+        res.status(500).json({ message: errorMessage });
+    };
+});
+
 planetController.post('/planets/create', isAdmin, isAuth, async (req, res) => {
     const { name, type, image, distanceToSun, size, description } = req.body;
     const comments = [];
@@ -92,6 +107,23 @@ planetController.get("/planets/:planetId", async (req, res) => {
       const error = catchError(err)
       res.status(500).json({ message: error });
     }
+});
+
+planetController.put('/planets/edit', isAdmin, isAuth, async (req, res) => {
+    const { name, type, image, distanceToSun, size, description, planetId} = req.body;
+    const ownerId = req.user._id;
+    
+    if(!name || !type || !image || !distanceToSun || !size || !description || !ownerId) {
+        return res.status(400).json({ message: 'All fields are required.' });
+    };
+
+    try {
+        const planet = await Planet.findByIdAndUpdate(planetId, { name, type, image, distanceToSun, size, description, comments:[], ownerId }, { new: true });
+        res.status(201).json(planet);
+    } catch (error) {
+        const errorMessage = catchError(error)
+        res.status(400).json({ message: errorMessage });
+    };
 });
 
 planetController.post("/planets/:planetId/comment", isAuth, async (req, res) => {

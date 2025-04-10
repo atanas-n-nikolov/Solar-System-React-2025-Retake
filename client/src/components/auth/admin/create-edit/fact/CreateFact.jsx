@@ -8,6 +8,7 @@ export default function CreateFact() {
     const { addFact, loading, error, success } = useAddFact();
     const { showNotification } = useNotificationContext();
     const navigate = useNavigate();
+
     const [factData, setFactData] = useState({
         title: "",
         date: "",
@@ -36,8 +37,6 @@ export default function CreateFact() {
 
     return (
         <div className={styles.formContainer}>
-            {error && <p>{error}</p>}
-            {success && <p>Fact created successfully!</p>}
             <h2>Create a New Fact</h2>
             <form onSubmit={handleSubmit}>
                 <div className={styles.formGroup}>
@@ -79,7 +78,9 @@ export default function CreateFact() {
                         onChange={handleInputChange}
                     />
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit" disabled={loading}>
+                    {loading  ? "Submitting..." : "Submit"}
+                </button>
             </form>
         </div>
     );

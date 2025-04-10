@@ -34,11 +34,62 @@ quizController.get('/quiz', isAuth, async (req, res) => {
     };
 });
 
+quizController.get('/quiz/all', isAdmin, isAuth, async (req, res) => {
+    try {
+        const quizzes = await Quiz.find({}, '_id title category');
+        res.status(200).json(quizzes);
+    } catch (error) {
+        const errorMessage = catchError(error);
+        res.status(500).json({ message: errorMessage });
+    };
+});
+
+quizController.delete('/quiz/delete', isAdmin, isAuth, async (req, res) => {
+    const { quizId } = req.body.data;
+
+    try {
+        const fact = await Quiz.findByIdAndDelete(quizId);
+        res.status(201).json([]);
+    } catch (error) {
+        const errorMessage = catchError(error)
+        res.status(400).json({ message: errorMessage });
+    };
+});
+
+quizController.get('/quiz/full', isAdmin, isAuth, async (req, res) => {
+    try {
+        const quizzes = await Quiz.find();
+        res.status(200).json(quizzes);
+    } catch (error) {
+        const errorMessage = catchError(error);
+        res.status(500).json({ message: errorMessage });
+    };
+});
+
+quizController.put('/quiz/edit', isAdmin, isAuth, async (req, res) => {
+    const { title, category, options, correctAnswer, quizId} = req.body;
+    const ownerId = req.user._id;
+    
+    if(!title || !category || !options || !correctAnswer || !quizId || !ownerId) {
+        return res.status(400).json({ message: 'All fields are required.' });
+    };
+
+    try {
+        const quiz = await Quiz.findByIdAndUpdate(quizId, { title, category, options, correctAnswer, quizId }, { new: true });
+        res.status(201).json(quiz);
+    } catch (error) {
+        const errorMessage = catchError(error)
+        res.status(400).json({ message: errorMessage });
+    };
+});
+
+
+
 quizController.post('/quiz/create', isAdmin, isAuth, async (req, res) => {
     const { title, category, options, correctAnswer } = req.body;
     const ownerId = req.user._id;
 
-    const optionsArray = options.split(',').map(option => option.trim());
+    let optionsArray = Array.isArray(options) ? options : options.split(',').map(option => option.trim());
 
     if (!title || !category || !optionsArray || !correctAnswer) {
         return res.status(400).json({ message: 'All fields are required.' });
@@ -61,6 +112,7 @@ quizController.post('/quiz/create', isAdmin, isAuth, async (req, res) => {
     };
 });
 
+
 quizController.get('/quiz/latest', async (req, res) => {
     try {
         const quiz = await Quiz.findOne().sort({ createdAt: -1 }).limit(1);
@@ -68,7 +120,6 @@ quizController.get('/quiz/latest', async (req, res) => {
         if(!quiz) {
             return res.status(200).json({});
         };
-        console.log(quiz);
         
         res.status(200).json(quiz);
     } catch (error) {

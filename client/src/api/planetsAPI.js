@@ -26,6 +26,34 @@ export const usePlanets = () => {
     return { planets, error, loading };
 };
 
+export const useUpdatePlanet = () => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
+
+    const updatePlanet = async (planetId, planetData) => {
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+
+        const dataToSend = { ...planetData, planetId };
+
+        try {
+            const response = await request.put(`${baseUrl}/edit`, dataToSend);
+            setSuccess(true);
+            console.log('Planet updated:', response);
+        } catch (error) {
+            setError('Failed to update planet. Please try again later.');
+            console.error('Error updating planet:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { updatePlanet, loading, error, success };
+};
+
+
 export const usePlanet = (planetId) => {
     const [planet, setPlanet] = useState({});
     const [loading, setLoading] = useState(true);

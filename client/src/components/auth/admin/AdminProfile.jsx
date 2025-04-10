@@ -1,30 +1,70 @@
-import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router";
-import styles from "./AdminProfile.module.css";
-import { UserContext } from "../../../context/UserContext";
+import React from 'react';
+import { Link } from 'react-router';
+import styles from './AdminProfile.module.css';
 
-export default function AdminProfile() {
-    const { firstName, lastName, role } = useContext(UserContext);
-    const navigate = useNavigate();
-
-    const handleNavigateToAdminPage = () => {
-        if (userData?.role === 'admin') {
-            navigate('/admin-dashboard');
-        }
-    };
-
+const AdminProfile = () => {
     return (
-        <div className={styles.profileNavigation}>
-            <h2 onClick={handleNavigateToAdminPage} className={styles.userName}>
-                {firstName} {lastName}
-            </h2>
-            {role === 'admin' && (
-                <div className={styles.adminButtons}>
-                    <Link to="/create-fact" className={styles.createLink}>Create Fact</Link>
-                    <Link to="/create-planet" className={styles.createLink}>Create Planet</Link>
-                    <Link to="/create-quiz" className={styles.createLink}>Create Quiz</Link>
+        <div className={styles.container}>
+            <h2>Админ профил</h2>
+
+            <div className={styles.section}>
+                <h3>Факти</h3>
+                <div className={styles.linksContainer}>
+                    <div className={styles.linkItem}>
+                        <h4>Създаване на нов факт</h4>
+                        <Link to="/create-fact" className={styles.createLink}>
+                            Създайте нов факт
+                        </Link>
+                    </div>
+
+                    <div className={styles.linkItem}>
+                        <h4>Редактиране или изтриване на факт</h4>
+                        <Link to="/fact/edit-fact" className={styles.editLink}>
+                            Редактиране/Изтриване на факт
+                        </Link>
+                    </div>
                 </div>
-            )}
+            </div>
+
+            <div className={styles.section}>
+                <h3>Планети</h3>
+                <div className={styles.linksContainer}>
+                    <div className={styles.linkItem}>
+                        <h4>Създаване на нова планета</h4>
+                        <Link to="/create-planet" className={styles.createLink}>
+                            Създайте нова планета
+                        </Link>
+                    </div>
+
+                    <div className={styles.linkItem}>
+                        <h4>Редактиране или изтриване на планета</h4>
+                        <Link to="/planet/edit-planet" className={styles.editLink}>
+                            Редактиране/Изтриване на планета
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.section}>
+                <h3>Въпроси</h3>
+                <div className={styles.linksContainer}>
+                    <div className={styles.linkItem}>
+                        <h4>Създаване на нов въпрос</h4>
+                        <Link to="/create-quiz" className={styles.createLink}>
+                            Създайте нов въпрос
+                        </Link>
+                    </div>
+
+                    <div className={styles.linkItem}>
+                        <h4>Редактиране или изтриване на въпрос</h4>
+                        <Link to="/quiz/edit-quiz" className={styles.editLink}>
+                            Редактиране/Изтриване на въпрос
+                        </Link>
+                    </div>
+                </div>
+            </div>
         </div>
     );
-}
+};
+
+export default AdminProfile;

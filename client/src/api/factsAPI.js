@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import request from "./request";
+import { useParams } from "react-router";
 
 const baseUrl = 'http://localhost:3000/fact';
 
@@ -30,6 +31,33 @@ export const useFact = () => {
     return { fact, error, loading };
 };
 
+export const useAllFact = () => {
+    const [facts, setFacts] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchFact = async () => {
+            try {
+                const response = await request.get(`${baseUrl}/all`);
+                if (response) {
+                    setFacts(response);
+                } else {
+                    setError('No fact available for today.');
+                }
+                setLoading(false);
+            } catch (error) {
+                setError('Failed to load fact. Please try again later.');
+                setLoading(false);
+            }
+        };
+
+        fetchFact();
+    }, []);
+
+    return { facts, error, loading };
+};
+
 export const useAddFact = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -55,4 +83,58 @@ export const useAddFact = () => {
     };
 
     return { addFact, loading, error, success };
+};
+
+export const useUpdateFact = () => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
+
+    const updateFact = async (factId, factData) => {
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+
+        const dataToSend = { ...factData, factId };
+
+        try {
+            const response = await request.put(`${baseUrl}/edit`, dataToSend);
+            setSuccess(true);
+            console.log('Fact updated:', response);
+        } catch (error) {
+            setError('Failed to update fact. Please try again later.');
+            console.error('Error updating fact:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { updateFact, loading, error, success };
+};
+
+export const useDeleteFact = () => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
+
+    const deleteFact = async (factId) => {
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+
+        try {
+            const response = await request.delete(`${baseUrl}/delete`, {
+                data: { factId }
+            });
+            setSuccess(true);
+            console.log('Fact deleted:', response.data);
+        } catch (error) {
+            setError('Failed to delete fact. Please try again later.');
+            console.error('Error deleting fact:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { deleteFact, loading, error, success };
 };

@@ -20,9 +20,12 @@ import PlanetDetails from './components/planets/planetDetails/PlanetDetails';
 import QuizForm from './components/quiz/quizForm/QuizForm';
 import UserProfile from './components/auth/user/UserProfile';
 import AdminProfile from './components/auth/admin/AdminProfile';
-import CreateFact from './components/auth/admin/create/fact/CreateFact';
-import CreateQuiz from './components/auth/admin/create/quiz/CreateQuiz';
-import CreatePlanet from './components/auth/admin/create/planet/CreatePlanet';
+import CreateFact from './components/auth/admin/create-edit/fact/CreateFact';
+import CreateQuiz from './components/auth/admin/create-edit/quiz/CreateQuiz';
+import CreatePlanet from './components/auth/admin/create-edit/planet/CreatePlanet';
+import EditFact from './components/auth/admin/create-edit/fact/EditFact';
+import EditPlanet from './components/auth/admin/create-edit/planet/EditPlanet';
+import EditQuiz from './components/auth/admin/create-edit/quiz/EditQuiz';
 
 const Planets = lazy(() => import('./components/planets/Planets'));
 const Quiz = lazy(() => import('./components/quiz/Quiz'));
@@ -53,8 +56,11 @@ export default function App() {
                                     <Route path="/profile/:userId" element={<UserProfile />} />
                                     <Route path="/admin-dashboard" element={<AdminProfile />} />
                                     <Route path="/create-fact" element={<CreateFact />} />
-                                    <Route path="/create-quiz" element={<CreateQuiz />} />
+                                    <Route path="/fact/edit-fact" element={<EditFact />} />
                                     <Route path="/create-planet" element={<CreatePlanet />} />
+                                    <Route path="/planet/edit-planet" element={<EditPlanet />} />
+                                    <Route path="/create-quiz" element={<CreateQuiz />} />
+                                    <Route path="/quiz/edit-quiz" element={<EditQuiz />} />
                                 </Route>
                             </Routes>
                         </Suspense>

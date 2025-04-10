@@ -1,0 +1,95 @@
+.formContainer {
+    width: 100%;
+    max-width: 600px;
+    margin: 4em auto;
+    padding: 1.5em;
+    background-color: #f9f9f9;
+    border-radius: 0.5em;
+    box-shadow: 0 0.15em 0.6em rgba(0, 0, 0, 0.1);
+}
+
+.formContainer h2 {
+    text-align: center;
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 1.2em;
+}
+
+.formGroup {
+    margin-bottom: 1.9em;
+}
+
+label {
+    font-size: 1em;
+    color: #555;
+    display: block;
+    margin-bottom: 0.4em;
+}
+
+.formGroup input, .formGroup textarea {
+    width: 100%;
+    padding: 0.7em;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 0.25em;
+    margin-bottom: 0.6em;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 150px;
+}
+
+button:hover {
+    background-color: #c82333;
+}
+
+.formButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.formButtons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.formButtons button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.formButtons button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.formButtons button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.formButtons button[type="button"]:nth-child(2) {
+    background-color: #f44336;
+    color: white;
+}
+
+.formButtons button[type="button"]:nth-child(2):hover {
+    background-color: #e53935;
+}
+
+.formButtons button[type="button"]:nth-child(3) {
+    background-color: #9E9E9E;
+    color: white;
+}
+
+.formButtons button[type="button"]:nth-child(3):hover {
+    background-color: #757575;
+}
+
