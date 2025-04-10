@@ -1,6 +1,68 @@
 # Solar-System-React-2025-Retake
 
+## Solar System React App
 
+Deplpyed at: https://solar-system-react-2025-retake.onrender.com/
+# Overview
+This is a React-based application designed to showcase planets, quizzes, and user profiles. The app includes various features such as:
+
+Displaying a list of planets.
+
+Detailed planet view.
+
+A quiz section with multiple categories.
+
+User authentication (login, registration).
+
+Admin dashboard for managing facts, quizzes, and planets.
+
+The application has been deployed and can be accessed online.
+
+Features
+Lazy Loading: Components are lazy-loaded for optimized performance.
+
+Routing: React Router is used for seamless navigation between different pages like Home, Planets, Quiz, User Profile, and Admin Dashboard.
+
+User Authentication: Includes login, registration, and user profile pages.
+
+Admin Dashboard: Admin users can create, edit, and manage planets, facts, and quizzes.
+
+Suspense and Spinner: Uses React's Suspense with a custom spinner to handle lazy loading.
+
+Responsive Design: The app is fully responsive, ensuring it works on both mobile and desktop devices.
+
+ Install dependencies
+
+ ```
+ npm install
+ ```
+For development, you can start the server with:
+```
+npm run dev
+```
+
+Deployment
+The app is deployed and can be accessed via the following link:
+https://solar-system-react-2025-retake.onrender.com
+
+It is hosted on Render, and due to the nature of cloud hosting, occasionally you might experience slower response times, especially when using services like Render or MongoDB Atlas. These platforms can sometimes experience brief downtimes (for a few minutes), and you may need to wait a bit longer for requests to complete.
+
+Known Issues
+Slow Response Times: As noted, sometimes Render or MongoDB Atlas may "sleep," which could cause slower-than-expected responses when making requests. This is usually resolved by retrying the request after a short wait.
+
+Pending Requests: Certain requests (like /quiz) may show as pending while waiting for the backend to respond. If this happens, try waiting for the request to process, and it should eventually resolve.
+
+Technologies Used
+React: For building the user interface.
+
+React Router: For routing and navigation between pages.
+
+Suspense: For lazy loading components.
+
+MongoDB Atlas: For cloud-based database hosting.
+
+Render: For deploying the app.
+ 
 ## Starting the Project
 
 1. **Navigate to the server directory**:
