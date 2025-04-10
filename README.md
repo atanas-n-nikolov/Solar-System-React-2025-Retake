@@ -2,7 +2,6 @@
 
 ## Solar System React App
 
-Deplpyed at: https://solar-system-react-2025-retake.onrender.com/
 # Overview
 This is a React-based application designed to showcase planets, quizzes, and user profiles. The app includes various features such as:
 
@@ -44,6 +43,10 @@ npm run dev
 Deployment
 The app is deployed and can be accessed via the following link:
 https://solar-system-react-2025-retake.onrender.com
+
+Admin profile:
+user: admin@abv.bg
+password: 123123
 
 It is hosted on Render, and due to the nature of cloud hosting, occasionally you might experience slower response times, especially when using services like Render or MongoDB Atlas. These platforms can sometimes experience brief downtimes (for a few minutes), and you may need to wait a bit longer for requests to complete.
 
