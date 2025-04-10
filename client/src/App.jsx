@@ -5,7 +5,7 @@ import Spinner from './components/common/spinner/Spinner';
 import UserProvider from './providers/UserProvider';
 import { NotificationProvider } from './providers/NotificationProvider';
 import GuestGuard from './components/guards/GuestGuard';
-import UserGuard from './components/guards/userGuard';
+import UserGuard from './components/guards/UserGuard';
 
 import Footer from './components/common/footer/Footer';
 import Header from './components/common/header/Header';
