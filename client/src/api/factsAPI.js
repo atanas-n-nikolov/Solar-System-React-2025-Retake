@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import request from "./request";
-import { useParams } from "react-router";
 
-const baseUrl = 'http://localhost:3000/fact';
+const baseUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/fact` : 'http://localhost:3000/fact';
 
 export const useFact = () => {
     const [fact, setFact] = useState(null);

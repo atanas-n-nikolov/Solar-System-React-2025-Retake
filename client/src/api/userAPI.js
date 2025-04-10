@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import request from "./request";
 
-const baseUrl = 'http://localhost:3000/profile';
+const baseUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/profile` : 'http://localhost:3000/profile';
 
 
 export const getUserData = (userId) => {

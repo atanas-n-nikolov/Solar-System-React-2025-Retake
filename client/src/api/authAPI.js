@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import request from "./request";
 import { UserContext } from "../context/UserContext";
 
-const baseUrl = 'http://localhost:3000';
+const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 
 export const useRegister = () => {
     const register = async (firstName, lastName, email, password, rePassword) => {
