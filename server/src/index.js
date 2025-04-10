@@ -1,7 +1,7 @@
 import express from 'express';
 import routes from './routes.js';
-import cors from 'cors'
-import 'dotenv/config'
+import cors from 'cors';
+import 'dotenv/config';
 import mongoose from 'mongoose';
 import { authMiddleware } from './middlewares/authMiddleware.js';
 
@@ -18,8 +18,8 @@ app.use(routes);
 const PORT = process.env.PORT || 3000;
 const url = process.env.MONGO_URI || "mongodb://localhost:27017";
 
-mongoose.connect(url, { dbName: 'solar-system'})
+mongoose.connect(url, { dbName: 'solar-system' })
   .then(() => console.log('DB Connected!'))
-  .catch((err) => console.log(`DB failed: #{err}`));
+  .catch((err) => console.log(`DB failed: ${err}`));
 
-app.listen(3000, () => console.log('Server is listening on http://localhost:3000 ...'))
+app.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT} ...`));
