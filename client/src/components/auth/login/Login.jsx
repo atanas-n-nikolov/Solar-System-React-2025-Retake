@@ -75,7 +75,7 @@ export default function Login() {
                 </form>
 
                 <aside className={style.loginImage}>
-                    <img src="/images/login.png" alt="Login Illustration" />
+                    <img src="/images/login.png" alt="Login Illustration" loading="lazy" />
                 </aside>
             </section>
         </div>
