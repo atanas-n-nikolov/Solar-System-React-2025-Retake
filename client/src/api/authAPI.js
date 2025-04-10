@@ -2,8 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import request from "./request";
 import { UserContext } from "../context/UserContext";
 
-const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
-
+const baseUrl = import.meta.env.VITE_API_URL 
+  ? import.meta.env.VITE_API_URL
+  : 'http://localhost:3000';
+  
 export const useRegister = () => {
     const register = async (firstName, lastName, email, password, rePassword) => {
         try {

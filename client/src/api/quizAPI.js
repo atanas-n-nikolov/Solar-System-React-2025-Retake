@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import request from "./request";
 
-const baseUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/quiz` : 'http://localhost:3000/quiz';
+const baseUrl = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/quiz` 
+  : 'http://localhost:3000/quiz';
 
 export const useQuiz = () => {
     const [quiz, setQuiz] = useState([]);

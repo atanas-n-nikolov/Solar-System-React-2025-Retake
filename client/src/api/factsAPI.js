@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import request from "./request";
 
-const baseUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/fact` : 'http://localhost:3000/fact';
+console.log(import.meta.env.VITE_API_URL);
+
+const baseUrl = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/fact` 
+  : 'http://localhost:3000/fact';
 
 export const useFact = () => {
     const [fact, setFact] = useState(null);

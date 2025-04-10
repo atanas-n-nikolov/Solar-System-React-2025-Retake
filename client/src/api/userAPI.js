@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import request from "./request";
 
-const baseUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/profile` : 'http://localhost:3000/profile';
-
+const baseUrl = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/profile` 
+  : 'http://localhost:3000/profile';
 
 export const getUserData = (userId) => {
     return request.get(`${baseUrl}/${userId}`)
@@ -78,7 +79,7 @@ export const useQuizWithUserAnswers = (userId, category) => {
         if (userData && category) {
             const fetchQuestions = async () => {
                 try {
-                    const questionsResponse = await request.get(`http://localhost:3000/quiz/${category}`);
+                    const questionsResponse = await request.get(import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/quiz/${category}` :`http://localhost:3000/quiz/${category}`);
 
                     if (!questionsResponse || questionsResponse.length === 0) {
                         setNoQuizInCategory(true);

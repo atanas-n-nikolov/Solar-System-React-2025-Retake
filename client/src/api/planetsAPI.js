@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import request from './request.js';
 
-const baseUrl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/planets` : 'http://localhost:3000/planets';
+const baseUrl = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/planets` 
+  : 'http://localhost:3000/planets';
 
 export const usePlanets = () => {
     const [planets, setPlanets] = useState([]);
