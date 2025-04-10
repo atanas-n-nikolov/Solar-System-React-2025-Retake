@@ -31,6 +31,11 @@ export default function CreateFact() {
             return showNotification("All fields are required.", "error");
         };
 
+        const dateRegex = /^\d{2}\.\d{2}$/;
+        if (!dateRegex.test(factData.date)) {
+            return showNotification("Date must be in the format dd.mm.", "error");
+        };
+
         addFact(factData);
         navigate(-1);
     };

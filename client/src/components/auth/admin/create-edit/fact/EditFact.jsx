@@ -43,7 +43,12 @@ export default function EditFact() {
 
         if (!factData.title.trim() || !factData.date.trim() || !factData.year.trim() || !factData.description.trim()) {
             return showNotification("All fields are required.", "error");
-        }
+        };
+
+        const dateRegex = /^\d{2}\.\d{2}$/;
+        if (!dateRegex.test(factData.date)) {
+            return showNotification("Date must be in the format dd.mm.", "error");
+        };
 
         setIsSubmitting(true);
         try {

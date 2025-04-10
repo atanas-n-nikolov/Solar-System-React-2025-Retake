@@ -31,7 +31,12 @@ export default function CreatePlanet() {
         if (!planetData.name.trim() || !planetData.type.trim() || !planetData.image.trim() || !planetData.distanceToSun.trim() || !planetData.size.trim() || !planetData.description.trim()) {
             return showNotification("All fields are required.", "error");
         };
-        
+
+        const urlRegex = /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/i;
+        if (!urlRegex.test(planetData.image)) {
+            return showNotification("Please enter a valid image URL starting with http:// or https://", "error");
+        };
+
         addPlanet(planetData);
         navigate(-1);
     };
@@ -53,14 +58,16 @@ export default function CreatePlanet() {
                     />
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="type">Planet Type:</label>
-                    <input
-                        type="text"
+                    <select
                         id="type"
                         name="type"
                         value={planetData.type}
                         onChange={handleInputChange}
-                    />
+                    >
+                        <option value="">Select a type</option>
+                        <option value="Star">Star</option>
+                        <option value="Planet">Planet</option>
+                    </select>
                 </div>
                 <div className={styles.formGroup}>
                     <label htmlFor="image">Planet Image URL:</label>

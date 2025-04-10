@@ -45,6 +45,11 @@ export default function EditPlanet() {
 
         if (!planetData.name.trim() || !planetData.type.trim() || !planetData.image.trim() || !planetData.distanceToSun.trim() || !planetData.size.trim() || !planetData.description.trim()) {
             return showNotification("All fields are required.", "error");
+        };
+
+        const urlRegex = /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/i;
+        if (!urlRegex.test(planetData.image)) {
+            return showNotification("Please enter a valid image URL starting with http:// or https://", "error");
         }
 
         setIsSubmitting(true);
@@ -139,7 +144,6 @@ export default function EditPlanet() {
                             name="type"
                             value={planetData.type}
                             onChange={handleChange}
-                            disabled={isSubmitting}
                         >
                             <option value="">Select a type</option>
                             <option value="Star">Star</option>
