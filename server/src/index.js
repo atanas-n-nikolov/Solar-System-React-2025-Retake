@@ -8,11 +8,7 @@ import { authMiddleware } from './middlewares/authMiddleware.js';
 const app = express();
 
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://solar-system-react-2025-retake-client.onrender.com',
-    'https://solar-system-react-2025-retake.onrender.com'
-  ],
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
