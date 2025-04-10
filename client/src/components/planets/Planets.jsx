@@ -4,12 +4,8 @@ import { usePlanets } from '../../api/planetsAPI';
 import { useNotificationContext } from '../../context/NotificationContext';
 
 export default function Planets() {
-    const { planets, error, loading } = usePlanets();
+    const { planets, error } = usePlanets();
     const { showNotification } = useNotificationContext();
-
-    if (loading) {
-        return <h2 className={style.loading}>Loading...</h2>;
-    };
 
     if (error) {
         showNotification(error, 'error');

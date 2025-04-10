@@ -5,7 +5,7 @@ import { useNotificationContext } from '../../../context/NotificationContext';
 import { useEffect } from 'react';
 
 export default function LastQuiz() {
-    const { latestQuiz, error, loading } = useLatestQuiz();
+    const { latestQuiz, error } = useLatestQuiz();
     const { showNotification } = useNotificationContext();
 
     useEffect(() => {
@@ -13,10 +13,6 @@ export default function LastQuiz() {
             showNotification(error, 'error');
         }
     }, [error, showNotification]);
-
-    if (loading) {
-        return <h2 className={style.loading}>Loading...</h2>;
-    };
 
     return (
         <div className={style.wrapperQ}>

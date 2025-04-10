@@ -4,7 +4,7 @@ import { useNotificationContext } from '../../../context/NotificationContext';
 import style from './FactOfTheDay.module.css';
 
 export default function FactOfTheDay() {
-    const { fact, error, loading } = useFact();
+    const { fact, error } = useFact();
     const { showNotification } = useNotificationContext();
 
     useEffect(() => {
@@ -12,10 +12,6 @@ export default function FactOfTheDay() {
             showNotification(error, 'error');
         }
     }, [error, showNotification]);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    };
 
     if (!fact) {
         return null;

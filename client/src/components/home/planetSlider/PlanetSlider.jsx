@@ -8,7 +8,7 @@ import style from './PlanetSlider.module.css';
 import { useEffect } from "react";
 
 export default function PlanetSlider() {
-    const { planets, error, loading } = usePlanets();
+    const { planets, error } = usePlanets();
     const { showNotification } = useNotificationContext();
 
     useEffect(() => {
@@ -25,10 +25,6 @@ export default function PlanetSlider() {
         slidesToScroll: 1,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
-    };
-
-    if (loading) {
-        return <h2 className={style.loading}>Loading...</h2>;
     };
 
     if (!planets?.length) {

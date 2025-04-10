@@ -6,6 +6,7 @@ import { useNotificationContext } from '../../../context/NotificationContext';
 import style from './PlanetDetails.module.css';
 import { CommentForm } from '../../auth/user/comments/commentForm/CommentForm';
 import { Comment } from '../../auth/user/comments/comment/Comment';
+import Spinner from '../../common/spinner/Spinner';
 
 export default function PlanetDetails() {
     const { isAuthenticated, role } = useAuth();
@@ -15,7 +16,7 @@ export default function PlanetDetails() {
     const { showNotification } = useNotificationContext();
     const { deletePlanet, error: deleteError, loading: deleteLoading } = useDeletePlanet();
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Spinner />;
     if (error) showNotification(error, 'error');
 
     const updatePlanetComments = (updatedComments) => {
