@@ -62,6 +62,7 @@ export default function App() {
                                     <Route path="/create-quiz" element={<CreateQuiz />} />
                                     <Route path="/quiz/edit-quiz" element={<EditQuiz />} />
                                 </Route>
+                                <Route path="*" element={<h1>Page not found</h1>} />
                             </Routes>
                         </Suspense>
                     </main>
