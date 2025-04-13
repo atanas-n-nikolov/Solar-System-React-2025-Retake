@@ -81,7 +81,6 @@ Add .env file:
 
 In the root directory of the server, create a .env file with the following environment variables:
 ```
-PORT=5000
 MONGO_URI=mongodb+srv://projectUser:StrongPass123!@solarsystem.s8ccaq0.mongodb.net/?retryWrites=true&w=majority&appName=SolarSystem
 JWT_SECRET=SLGADL378123781723312LNDAGLJNDJN
 CLOUDINARY_API_KEY=631278238369768
